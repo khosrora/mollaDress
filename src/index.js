@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
-const http = require('http');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -13,17 +12,17 @@ module.exports = class Application {
     constructor() {
         this.setupExpress();
         this.setConfig();
+        this.setRouters();
     }
 
-
     setupExpress() {
-        const server = http.createServer(app);
-        server.listen("3000", () => {
+        app.listen("3000", () => {
             console.log(`listening on port ${3000}`)
         })
     }
-
     setConfig() {
+        // !passport Config
+        require('../config/passport');
         // ! cookie parser
         app.use(cookieParser());
         //!DATABASE
@@ -42,7 +41,6 @@ module.exports = class Application {
             unset: "destroy",
             store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
         }))
-
         // !passport
         app.use(passport.initialize());
         app.use(passport.session());
@@ -51,13 +49,15 @@ module.exports = class Application {
         // ! DIR VIEWS
         app.set("views", "views");
         // ! EXPRESS_LAYOUTS
-        app.set("layout", "./layouts/mainLayout.ejs");
+        app.set("layout", "./layouts/layouts.ejs");
         app.use(expressLayouts);
         // !Public Routes
-        app.use(express.static(path.join(__dirname, "public")))
-        app.get("/", (req, res) => {
-            res.json({ messagee: "hello guys !!" })
-        })
+        app.use(express.static(path.join(__dirname, "../public")))
     }
-
+    setRouters() {
+        // ! PUBLIC ROUTES
+        app.use("/", require('./components/public/publicRouter'))
+        // ! USER ROUTES
+        app.use("/user", require('./components/user/userRouter'))
+    }
 }

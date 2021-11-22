@@ -3,7 +3,7 @@ const { Strategy } = require('passport-local');
 
 const bcrypt = require('bcrypt');
 
-const User = require('../src/components/user/model/userModel');
+const User = require('../src/components/user/model/User');
 
 passport.use(
     new Strategy({ usernameField: "email" }, async (email, password, done) => {
@@ -12,11 +12,6 @@ passport.use(
             if (!user) {
                 return done(null, false, {
                     message: "شما ثبت نام نکرده اید",
-                });
-            }
-            if (user.isMobileActive === false) {
-                return done(null, false, {
-                    message: "لطفا اکانت خود را فعال کنید"
                 });
             }
             const isMatch = await bcrypt.compare(password, user.password);
