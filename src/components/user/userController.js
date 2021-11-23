@@ -96,6 +96,16 @@ class userController extends controller {
         }
     }
 
-
+    // ? desc ==> logout user
+// ? path ==> /user/logout
+    async logout(req, res) {
+        try {
+            req.session = null;
+            req.logout();
+            res.redirect("/")
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
 }
 module.exports = new userController();

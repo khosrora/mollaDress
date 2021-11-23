@@ -3,10 +3,13 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
-const MongoStore = require('connect-mongo');
+const session = require('express-session');
+
+
+// * Helpers
+const Helpers = require('./helper');
 
 module.exports = class Application {
     constructor() {
@@ -34,13 +37,7 @@ module.exports = class Application {
         // ! flash
         app.use(flash());
         // ! session
-        app.use(session({
-            secret: process.env.SESSION_SECRET,
-            resave: false,
-            saveUninitialized: false,
-            unset: "destroy",
-            store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
-        }))
+        app.use(session({ ...config.session }))
         // !passport
         app.use(passport.initialize());
         app.use(passport.session());
@@ -51,8 +48,14 @@ module.exports = class Application {
         // ! EXPRESS_LAYOUTS
         app.set("layout", "./layouts/layouts.ejs");
         app.use(expressLayouts);
+        app.set("layout extractScripts", true)
         // !Public Routes
         app.use(express.static(path.join(__dirname, "../public")))
+        // ! validation login user
+        app.use((req, res, next) => {
+            app.locals = new Helpers(req, res).getObjects();
+            next();
+        })
     }
     setRouters() {
         // ! PUBLIC ROUTES

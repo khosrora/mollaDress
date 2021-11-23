@@ -5,6 +5,9 @@ const router = new Router();
 const publicController = require('./publicController');
 
 
+// ! middleware
+const Handle = require('../../middleware/handle');
+
 
 // ? desc ==> home page
 // ? path ==> /page
@@ -12,11 +15,11 @@ router.get("/", publicController.home);
 
 // ? desc ==> login page
 // ? path ==> /login
-router.get("/login", publicController.getLoginPage);
+router.get("/login", Handle.isLogged, publicController.getLoginPage);
 
 // ? desc ==> register page
 // ? path ==> /register
-router.get("/register", publicController.getRegisterPage);
+router.get("/register", Handle.isLogged, publicController.getRegisterPage);
 
 
 

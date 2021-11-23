@@ -4,15 +4,17 @@ const router = new Router();
 // ! controllers
 const userController = require('./userController');
 
-
-
 // ? desc ==> register user
-// ? path ==> /register
+// ? path ==> /user/register
 router.post("/register", userController.register);
 
 // ? desc ==> login user
-// ? path ==> /login
-router.post("/login", userController.login);
+// ? path ==> /user/login
+router.post("/login",  userController.login);
+
+// ? desc ==> logout user
+// ? path ==> /user/logout
+router.get("/logout", userController.logout);
 
 
 
