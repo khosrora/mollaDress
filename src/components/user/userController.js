@@ -18,7 +18,6 @@ class userController extends controller {
             const { email, mobile, password, captcha } = req.body
             if (!req.body.captcha) {
                 req.flash("error", "کد ریکپچای شما تایید نشد.لطفا دوباره امتحان کنید");
-                req.flash("formData", req.body);
                 return this.back(req, res)
             }
             // ! validate 
@@ -29,7 +28,6 @@ class userController extends controller {
             const user = await User.findOne({ $or: [{ email }, { mobile }] });
             if (user) {
                 req.flash("error", "شما ثبت نام کرده اید");
-                req.flash("formData", req.body);
                 return this.back(req, res)
             }
             // ! create new User
@@ -60,12 +58,10 @@ class userController extends controller {
             // ! validation
             if (!email || !password) {
                 req.flash("error", "لطفا اطلاعات را کامل کنید");
-                req.flash("formData", req.body);
                 return this.back(req, res)
             }
             if (!req.body.captcha) {
                 req.flash("error", "کد ریکپچای شما تایید نشد.لطفا دوباره امتحان کنید");
-                req.flash("formData", req.body);
                 return this.back(req, res)
             }
             // ! verify captcha
@@ -143,7 +139,6 @@ class userController extends controller {
             const { mobile, code, password, captcha } = req.body;
             if (!req.body.captcha) {
                 req.flash("error", "کد ریکپچای شما تایید نشد.لطفا دوباره امتحان کنید");
-                req.flash("formData", req.body);
                 this.back(req, res)
             }
             // ! verify captcha
@@ -152,7 +147,6 @@ class userController extends controller {
             const user = await User.findOne({ mobile });
             if (!user) {
                 req.flash("error", "شما ثبت نام نکرده اید");
-                req.flash("formData", req.body);
                 this.back(req, res)
             }
             // ! validate 
@@ -165,7 +159,6 @@ class userController extends controller {
                 return res.redirect("/login")
             } else {
                 req.flash("error", "کد وارد شده اشتباه است");
-                req.flash("formData", req.body);
                 this.back(req, res)
             }
 

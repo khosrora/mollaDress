@@ -65,5 +65,6 @@ module.exports = class Application {
         app.use("/user", require('./components/user/userRouter'))
         // ! ADMIN ROUTES
         app.use("/admin", require('./components/admin/public/adminRouter'))
+        app.use("/admin", require('./components/admin/products/productRouter'))
     }
 }
