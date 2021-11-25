@@ -21,6 +21,14 @@ router.get("/login", Handle.isLogged, publicController.getLoginPage);
 // ? path ==> /register
 router.get("/register", Handle.isLogged, publicController.getRegisterPage);
 
+// ? desc ==> forgot Password user
+// ? path ==> /forgotPass
+router.get("/forgotPass", Handle.isLogged, publicController.getForgotPassPage);
+
+// ? desc ==> change Password user
+// ? path ==> /changePass
+router.get("/changePass", Handle.isLogged, publicController.getChangePassPage);
+
 
 
 

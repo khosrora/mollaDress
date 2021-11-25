@@ -1,5 +1,14 @@
 <% if(message.length> 0) {%>
+    <script>
+        iziToast.settings({
+            position: 'topRight',
+            rtl: true
+        });
+        iziToast.success({
+            title: '',
+            message: '<%= message %>',
+        });
+    </script>
     <p class="text-center" style="color:#5AA897">
-        <%= message %>
     </p>
     <%}%>

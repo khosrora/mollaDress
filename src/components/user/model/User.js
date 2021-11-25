@@ -7,7 +7,7 @@ const userSchema = new Schema({
 
     fullname: { type: String, required: false },
     email: { type: String, required: true, unique: true },
-    mobile: { type: String, required: true, unique: true },
+    mobile: { type: String, required: false, unique: true },
     password: { type: String, required: true },
     isBloocked: { type: Boolean, default: false },
     isAdmin: { type: String, enum: ["User", "Admin"], default: "User" },

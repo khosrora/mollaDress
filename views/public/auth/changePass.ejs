@@ -1,0 +1,95 @@
+<main class="main">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index-1.html">خانه</a></li>
+                <li class="breadcrumb-item"><a href="#">صفحات</a></li>
+                <li class="breadcrumb-item active" aria-current="page">ورود / ثبت نام</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
+        style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
+        <div class="container">
+            <div class="form-box">
+                <div class="form-tab">
+                    <ul class="nav nav-pills nav-fill" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active">بازیابی رمز عبور</a>
+                        </li>
+                    </ul>
+                    <div class=" tab-content">
+                        <div class="tab-pane fade show active">
+                            <%- include("../../messages/error") %>
+                                <%- include("../../messages/message") %>
+                                    <form action="/user/changePass" method="post" id="codeForm">
+                                        <input type="hidden" value="" id="captcha" name="captcha">
+                                        <div class="form-group my-5">
+                                            <label for="mobile">شماره تماس *</label>
+                                            <input type="" class="form-control" id="mobile" name="mobile"
+                                                value="<%= formData ? formData.mobile : '' %>">
+                                        </div><!-- End .form-group -->
+                                        <div class="form-group my-5">
+                                            <label for="code">کد ارسال شده *</label>
+                                            <input type="" class="form-control" id="code" name="code"
+                                                value="<%= formData ? formData.code : '' %>">
+                                        </div><!-- End .form-group -->
+                                        <div class="form-group my-5">
+                                            <label for="password">کلمه عبور *</label>
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                value="<%= formData ? formData.password : '' %>">
+                                        </div><!-- End .form-group -->
+                                        <div class="form-footer">
+                                            <button type="submit" class="btn btn-outline-primary-2">
+                                                <span>تغییر کلمه عبور</span>
+                                                <i class="icon-long-arrow-left"></i>
+                                            </button>
+                                        </div><!-- End .form-footer -->
+                                    </form>
+                        </div><!-- .End .tab-pane -->
+                    </div><!-- End .tab-content -->
+                </div><!-- End .form-tab -->
+            </div><!-- End .form-box -->
+        </div><!-- End .container -->
+    </div><!-- End .login-page section-bg -->
+</main><!-- End .main -->
+
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc2RkwdAAAAAFkWDXKj2d5v7zc4JaR0Is4i3PbN"></script>
+
+<script src="/assets/js/auth/captcha.js"></script>
+
+<script>
+    jQuery.extend(jQuery.validator.messages, {
+        required: "وارد کردن این فیلد ضروری است",
+        email: "پست الکترونیک درست وارد نشده است",
+        number: "لطفا بصورت عدد وارد کنید",
+        maxlength: jQuery.validator.format("کلمه عبور خود را بیشتر از 30 کاراکتر انتخاب نکنید"),
+        minlength: jQuery.validator.format(".کلمه عبور خود را کمتر از 8 کاراکتر انتخاب نکنید"),
+    });
+
+    $(document).ready(function () {
+        $.validator.setDefaults({
+            highlight: function (element) {
+                $(element)
+                    .closest(".form-group")
+                    .addClass("has-error")
+            }
+        });
+        $('#codeForm').validate(
+            {
+                rules: {
+                    code: {
+                        required: true,
+                    },
+                    mobile: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                        minlength: 8
+                    }
+                }
+            });
+    });
+</script>

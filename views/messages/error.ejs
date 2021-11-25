@@ -1,5 +1,12 @@
 <% if(error.length> 0) {%>
-    <p style="color: rgb(202, 29, 29);">
-        <%= error %>
-    </p>
+    <script>
+        iziToast.settings({
+            position: 'topRight',
+            rtl: true
+        });
+        iziToast.error({
+            title: 'هشدار',
+            message: '<%= error %>',
+        });
+    </script>
     <%}%>

@@ -14,7 +14,6 @@ $(document).ready(function () {
                 .addClass("has-error")
         }
     });
-    console.log($('#loginForm'));
     $('#loginForm').validate(
         {
             rules: {

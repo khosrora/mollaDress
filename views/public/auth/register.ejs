@@ -10,7 +10,7 @@
     </nav><!-- End .breadcrumb-nav -->
 
     <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17"
-        style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
+        style="background-image: url('/assets/images/backgrounds/login-bg.jpg')">
         <div class="container">
             <div class="form-box">
                 <div class="form-tab">
@@ -20,44 +20,45 @@
                         </li>
                     </ul>
                     <div class="">
-                        <div class="">
+                        <%- include("../../messages/errors.ejs") %>
                             <%- include("../../messages/error.ejs") %>
-                                <form action="/user/register" method="post" id="registerForm">
-                                    <input type="hidden" value="" id="captcha" name="captcha">
-                                    <div class="form-group my-5">
-                                        <label for="email">پست الکترونیک *</label>
-                                        <input type="email" class="form-control" id="email" name="email">
-                                    </div><!-- End .form-group -->
-                                    <div class="form-group my-5">
-                                        <label for="mobile">شماره تماس *</label>
-                                        <input type="" class="form-control" id="mobile" name="mobile">
-                                    </div><!-- End .form-group -->
-                                    <div class="form-group my-5">
-                                        <label for="password">کلمه عبور *</label>
-                                        <input type="password" class="form-control" id="password" name="password">
-                                    </div><!-- End .form-group -->
-                                    <div class="form-footer">
-                                        <button type="submit" class="btn btn-outline-primary-2">
-                                            <span>ثبت نام</span>
-                                            <i class="icon-long-arrow-left"></i>
-                                        </button>
-                                        <div class="">
-                                            <a href="/login">ثبت نام کرده اید ؟</a>
-                                        </div>
-                                    </div><!-- End .form-footer -->
-                                </form>
-                                <div class="form-choice">
-                                    <p class="text-center">یا ورود با </p>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <a href="#" class="btn btn-login btn-g">
-                                                <i class="icon-google"></i>
-                                                حساب کاربری گوگل
-                                            </a>
-                                        </div><!-- End .col-6 -->
-                                    </div><!-- End .row -->
-                                </div><!-- End .form-choice -->
-                        </div><!-- .End .tab-pane -->
+                                <div class="">
+                                    <form action="/user/register" method="post" id="registerForm">
+                                        <input type="hidden" value="" id="captcha" name="captcha">
+                                        <div class="form-group my-5">
+                                            <label for="email">پست الکترونیک *</label>
+                                            <input type="email" class="form-control" id="email" name="email" value="<%= formData ? formData['email'] : '' %>">
+                                        </div><!-- End .form-group -->
+                                        <div class="form-group my-5">
+                                            <label for="mobile">شماره تماس *</label>
+                                            <input type="" class="form-control" id="mobile" name="mobile" value="<%= formData ? formData['mobile'] : '' %>">
+                                        </div><!-- End .form-group -->
+                                        <div class="form-group my-5">
+                                            <label for="password">کلمه عبور *</label>
+                                            <input type="password" class="form-control" id="password" name="password" value="<%= formData ? formData['password'] : '' %>">
+                                        </div><!-- End .form-group -->
+                                        <div class="form-footer">
+                                            <button type="submit" class="btn btn-outline-primary-2">
+                                                <span>ثبت نام</span>
+                                                <i class="icon-long-arrow-left"></i>
+                                            </button>
+                                            <div class="">
+                                                <a href="/login">ثبت نام کرده اید ؟</a>
+                                            </div>
+                                        </div><!-- End .form-footer -->
+                                    </form>
+                                    <div class="form-choice">
+                                        <p class="text-center">یا ورود با </p>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <a href="/user/google" class="btn btn-login btn-g">
+                                                    <i class="icon-google"></i>
+                                                    حساب کاربری گوگل
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- End .form-choice -->
+                                </div><!-- .End .tab-pane -->
                     </div><!-- End .tab-content -->
                 </div><!-- End .form-tab -->
             </div><!-- End .form-box -->
@@ -66,5 +67,8 @@
     <button class="g-recaptcha" data-sitekey="6Lc2RkwdAAAAAFkWDXKj2d5v7zc4JaR0Is4i3PbN" data-callback='onSubmit'
         data-action='submit'></button>
 </main><!-- End .main -->
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc2RkwdAAAAAFkWDXKj2d5v7zc4JaR0Is4i3PbN"></script>
 
-<script src="assets/js/auth/registerPage.js"></script>
+<script src="/assets/js/auth/captcha.js"></script>
+
+<script src="/assets/js/auth/registerPage.js"></script>

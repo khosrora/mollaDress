@@ -26,6 +26,7 @@ module.exports = class Application {
     setConfig() {
         // !passport Config
         require('../config/passport');
+        require('../config/passportGoogle');
         // ! cookie parser
         app.use(cookieParser());
         //!DATABASE
@@ -62,5 +63,7 @@ module.exports = class Application {
         app.use("/", require('./components/public/publicRouter'))
         // ! USER ROUTES
         app.use("/user", require('./components/user/userRouter'))
+        // ! ADMIN ROUTES
+        app.use("/admin", require('./components/admin/public/adminRouter'))
     }
 }

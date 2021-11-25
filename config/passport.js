@@ -11,7 +11,7 @@ passport.use(
             const user = await User.findOne({ email });
             if (!user) {
                 return done(null, false, {
-                    message: "شما ثبت نام نکرده اید",
+                    message: "شما ثبت نام نکرده اید"
                 });
             }
             const isMatch = await bcrypt.compare(password, user.password);

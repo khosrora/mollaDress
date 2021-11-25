@@ -27,12 +27,12 @@
                                         <input type="hidden" value="" id="captcha" name="captcha">
                                         <div class="form-group my-5">
                                             <label for="email">پست الکترونیک *</label>
-                                            <input type="email" class="form-control" id="email" name="email">
+                                            <input type="email" class="form-control" id="email" name="email" value="<%= formData ? formData.email : '' %>">
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group my-5">
                                             <label for="password">کلمه عبور *</label>
-                                            <input type="password" class="form-control" id="password" name="password">
+                                            <input type="password" class="form-control" id="password" name="password" value="<%= formData ? formData.password : '' %>"> 
                                         </div><!-- End .form-group -->
 
                                         <div class="form-footer">
@@ -40,7 +40,6 @@
                                                 <span>ورود</span>
                                                 <i class="icon-long-arrow-left"></i>
                                             </button>
-
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                     id="register-policy-2" name="remember">
@@ -48,13 +47,16 @@
                                                     <p>مرا بخاطر بسپار</p>
                                                 </label>
                                             </div><!-- End .custom-checkbox -->
+                                            <div class="col-12">
+                                                <p><a href="/forgotPass">فراموشی رمز عبور</a></p>
+                                            </div>
                                         </div><!-- End .form-footer -->
                                     </form>
                                     <div class="form-choice">
                                         <p class="text-center">یا ورود با </p>
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <a href="#" class="btn btn-login btn-g">
+                                                <a href="/user/google" class="btn btn-login btn-g">
                                                     <i class="icon-google"></i>
                                                     حساب کاربری گوگل
                                                 </a>
@@ -68,5 +70,9 @@
         </div><!-- End .container -->
     </div><!-- End .login-page section-bg -->
 </main><!-- End .main -->
+
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc2RkwdAAAAAFkWDXKj2d5v7zc4JaR0Is4i3PbN"></script>
+
+<script src="/assets/js/auth/captcha.js"></script>
 
 <script src="assets/js/auth/loginPage.js"></script>
