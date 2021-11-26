@@ -66,6 +66,7 @@ module.exports = class Application {
         // ! ADMIN ROUTES
         app.use("/admin", require('./components/admin/public/adminRouter'))
         app.use("/admin", require('./components/admin/products/productRouter'))
+        app.use("/admin", require('./components/admin/categories/categoriesRouter'))
         // ! ERROR HANDLER
         app.use(require('./components/errorHandler').get404)
 
