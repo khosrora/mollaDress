@@ -1,4 +1,5 @@
-
+// *error handler
+const { get500 } = require('../../errorHandler');
 
 
 
@@ -13,6 +14,7 @@ class adminController {
             })
         } catch (err) {
             console.log(err.message);
+            get500(req, res)
         }
     }
 

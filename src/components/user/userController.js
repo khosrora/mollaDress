@@ -8,6 +8,9 @@ const passport = require('passport');
 const controller = require('../../helper/controller');
 const nanoId = require('../../helper/nanoId');
 
+// *error handler
+const { get500 } = require('../errorHandler');
+
 class userController extends controller {
 
     // ? desc ==> home page
@@ -15,7 +18,7 @@ class userController extends controller {
     async register(req, res) {
         try {
             // ! get items
-            const { email, mobile, password, captcha } = req.body
+            const { fullname, email, mobile, password, captcha } = req.body
             if (!req.body.captcha) {
                 req.flash("error", "کد ریکپچای شما تایید نشد.لطفا دوباره امتحان کنید");
                 return this.back(req, res)
@@ -32,10 +35,8 @@ class userController extends controller {
             }
             // ! create new User
             const newUser = await User.create({
-                email, mobile, password, mobileActiveCode: nanoId()
+                fullname, email, mobile, password, mobileActiveCode: nanoId()
             })
-            // ! send message
-            console.log(newUser.mobileActiveCode);
             // ! redirect user
             req.flash("success_msg", "ثبت نام با موفقیت انجام شد");
             res.redirect("/login");
@@ -93,9 +94,9 @@ class userController extends controller {
             res.redirect("/")
         } catch (err) {
             console.log(err.message);
+            get500(req, res)
         }
     }
-
 
     // ? desc ==> forgot Password user
     // ? path ==> /forgotPass

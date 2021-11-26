@@ -1,17 +1,42 @@
 const fs = require('fs');
 const appRoot = require('app-root-path');
 
-// ! MODEL
+// * MODEL
 const Product = require('./model/Product');
 
+// *error handler
+const { get500 } = require('../../errorHandler');
 
-// ! helper
+// * helper
 const controller = require('../../../helper/controller');
 const { slug } = require('../../../helper/slug');
+const { jalaliMoment } = require('../../../helper/jalali');
 
 
 
 class productController extends controller {
+
+
+
+    // ? desc ==> getAllProductPage
+    // ? path ==> /admin/Allproduct
+    async getAllProductPage(req, res) {
+        try {
+            // ! get items
+            const products = await Product.find().populate("user");
+            return res.render("admin/product/allproduct", {
+                title: " محصولات ",
+                breadCrumb: " محصولات ",
+                message: req.flash("success_msg"),
+                error: req.flash("error"),
+                products,
+                jalaliMoment
+            })
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
 
     // ? desc ==> getCreateProductPage
     // ? path ==> /admin/createproduct
@@ -21,11 +46,11 @@ class productController extends controller {
                 title: "ساخت محصول",
                 breadCrumb: "ساخت محصول",
                 error: req.flash("error"),
-                message: req.flash("success_msg"),
                 formData: req.flash("formData"),
             })
         } catch (err) {
             console.log(err.message);
+            get500(req, res)
         }
     }
 
@@ -48,22 +73,93 @@ class productController extends controller {
             }
             // ! get items
             req.body = { ...req.body };
-            console.log(req.body);
             await Product.create({
                 ...req.body, slug: slug(req.body.title), image: files, user: req.user.id
             })
 
             // ! redirect
             req.flash("success_msg", "اضافه کردن محصول با موفقیت به اتمام رسید")
-            return res.redirect("/admin/createProduct")
+            return res.redirect("/admin/allProduct")
         } catch (err) {
             console.log(err.message);
-            if (req.file) {
-                fs.unlinkSync(`${appRoot}/public/uploads/images/products/` + req.file.filename);
+            if (req.files.image) {
+                const images = req.files.image;
+                console.log(images);
+                for (let image of images) {
+                    var { filename } = image;
+                    fs.unlinkSync(`${appRoot}/public/uploads/images/products/` + filename);
+                }
             }
             req.flash("error", err.message);
             return this.back(req, res)
         }
     }
+
+    // ? desc ==> product is Active 
+    // ? path ==> /admin/changeisactive/:id
+    async changeIsActive(req, res) {
+        try {
+            const product = await Product.findById({ _id: req.params.id });
+            if (product.isActive) {
+                product.isActive = false;
+                await product.save();
+                req.flash("error", "محصول غیر فعال شد");
+                return res.redirect("/admin/allProduct");
+            } else {
+                product.isActive = true;
+                await product.save();
+                req.flash("success_msg", "محصول  فعال شد");
+                return res.redirect("/admin/allProduct");
+            }
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+
+    // ? desc ==> edit product 
+    // ? path ==> /admin/editProduct/:id
+    async getEditProduct(req, res) {
+        try {
+            const product = await Product.findOne({ _id: req.params.id });
+            return res.render("admin/product/editProduct", {
+                title: " ویرایش محصولات ",
+                breadCrumb: " ویرایش محصولات ",
+                message: req.flash("success_msg"),
+                error: req.flash("error"),
+                product,
+                jalaliMoment
+            })
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+
+    // ? desc ==> edit product 
+    // ? path ==> /admin/editProduct
+    async editProduct(req, res) {
+        try {
+            // !get items
+            const { id, title, price, categories, brand } = req.body
+            // ! validation 
+            if (!id || !title || !price || !categories || !brand) {
+                req.flash("error", "لطفا تمام مقادیر را کامل کنید");
+                return this.back(req, res);
+            }
+
+            // ! find product
+            await Product.findByIdAndUpdate({ _id: req.body.id }, {
+                ...req.body, slug: slug(title)
+            })
+            // ! send message
+            req.flash("success_msg", "محصول با موفقیت ویرایش شد");
+            return res.redirect("/admin/allProduct")
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
 }
 module.exports = new productController;

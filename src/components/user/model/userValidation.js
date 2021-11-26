@@ -2,6 +2,8 @@ const yup = require('yup');
 
 
 exports.userValidation = yup.object().shape({
+    fullname: yup.string()
+        .required("وارد کردن نام کاربری الزامی است"),
     email: yup.string()
         .required("وارد کردن پست الکترونیک الزامی است")
         .email("فرمت پست الکترونیک اشتباه است"),

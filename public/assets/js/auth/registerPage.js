@@ -18,6 +18,9 @@ $(document).ready(function () {
     $('#registerForm').validate(
         {
             rules: {
+                fullname: {
+                    required: true,
+                },
                 email: {
                     required: true,
                     email: true
