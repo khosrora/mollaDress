@@ -29,6 +29,10 @@ router.get("/forgotPass", Handle.isLogged, publicController.getForgotPassPage);
 // ? path ==> /changePass
 router.get("/changePass", Handle.isLogged, publicController.getChangePassPage);
 
+// ? desc ==> get single product
+// ? path ==> /product/:slug
+router.get("/product/:slug", publicController.getProductSingle);
+
 
 
 

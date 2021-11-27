@@ -39,6 +39,10 @@ router.get("/editProduct/:id", handle.isAdmin, productController.getEditProduct)
 // ? path ==> /admin/editProduct
 router.post("/editProduct", handle.isAdmin, productController.editProduct);
 
+// ? desc ==> single product 
+// ? path ==> /admin/singleProduct/:id
+router.get("/singleProduct/:id", handle.isAdmin, productController.getsingleProductPage);
+
 
 
 

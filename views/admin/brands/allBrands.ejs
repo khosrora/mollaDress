@@ -36,8 +36,8 @@
                                         </div>
                                         <div class="widget-body">
                                             <div class="table-toolbar">
-                                                <a href="/admin/createproduct" class="btn btn-default">
-                                                    ساخت محصول جدید
+                                                <a href="/admin/createBrand" class="btn btn-default">
+                                                    ساخت برند جدید
                                                 </a>
                                             </div>
                                             <table class="table table-striped table-hover table-bordered"
@@ -45,57 +45,22 @@
                                                 <thead>
                                                     <tr role="row">
                                                         <th>
-                                                            نام محصول
-                                                        </th>
-                                                        <th>
-                                                            وضعیت
-                                                        </th>
-                                                        <th>
-                                                            تاریخ
-                                                        </th>
-                                                        <th>
-                                                            سازنده
+                                                            نام دسته بندی
                                                         </th>
                                                         <th>
                                                         </th>
                                                     </tr>
                                                 </thead>
-
                                                 <tbody>
-                                                    <% for (let item of products) {%>
+                                                    <% for (let item of brands) {%>
                                                         <tr>
                                                             <td>
-                                                                <%= item.title %>
+                                                                <%= item.name %>
                                                             </td>
                                                             <td>
-                                                                <% if(item.isActive) {%>
-                                                                    <span class="badge badge-success">فعال</span>
-                                                                    <%}else {%>
-                                                                        <span class="badge badge-danger">غیر فعال</span>
-                                                                        <%}%>
-                                                            </td>
-                                                            <td>
-                                                                <%= jalaliMoment(item.createdAt) %>
-                                                            </td>
-                                                            <td class="center ">
-                                                                <%= item.user.fullname %>
-                                                            </td>
-                                                            <td>
-                                                                <a href="/admin/editProduct/<%= item._id %>"
-                                                                    class="btn btn-info btn-xs"><i
-                                                                        class="fa fa-edit"></i>ویرایش</a>
-                                                                <% if(item.isActive) {%>
-                                                                    <a href="/admin/changeisactive/<%= item._id %>"
-                                                                        class="btn btn-danger btn-xs "><i
-                                                                            class="fa fa-trash-o"></i>غیر فعال</a>
-                                                                    <%}else {%>
-                                                                        <a href="/admin/changeisactive/<%= item._id %>"
-                                                                            class="btn btn-success btn-xs"><i
-                                                                                class="fa fa-trash-o"></i>فعال</a>
-                                                                        <%}%>
-                                                                            <a href="/admin/singleProduct/<%= item._id %>"
-                                                                                class="btn btn-secondary btn-xs "><i
-                                                                                    class="fa fa-eye"></i> مشاهده</a>
+                                                                <a href="/admin/deleteBrand/<%= item._id %>"
+                                                                    class="btn btn-danger btn-xs "><i
+                                                                        class="fa fa-trash"></i> حذف</a>
                                                             </td>
                                                         </tr>
                                                         <%}%>

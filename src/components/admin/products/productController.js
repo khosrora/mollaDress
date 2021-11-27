@@ -3,6 +3,8 @@ const appRoot = require('app-root-path');
 
 // * MODEL
 const Product = require('./model/Product');
+const Category = require('../categories/model/Category');
+const Brand = require('../brands/model/Brand');
 
 // *error handler
 const { get500 } = require('../../errorHandler');
@@ -11,6 +13,7 @@ const { get500 } = require('../../errorHandler');
 const controller = require('../../../helper/controller');
 const { slug } = require('../../../helper/slug');
 const { jalaliMoment } = require('../../../helper/jalali');
+const { separate } = require('../../../helper/seperate');
 
 
 
@@ -42,11 +45,16 @@ class productController extends controller {
     // ? path ==> /admin/createproduct
     async getCreateProductPage(req, res) {
         try {
+            // ! get items
+            const categories = await Category.find({ category: null });
+            const brands = await Brand.find();
             return res.render("admin/product/createProduct", {
                 title: "ساخت محصول",
                 breadCrumb: "ساخت محصول",
                 error: req.flash("error"),
                 formData: req.flash("formData"),
+                categories,
+                brands
             })
         } catch (err) {
             console.log(err.message);
@@ -156,6 +164,28 @@ class productController extends controller {
             // ! send message
             req.flash("success_msg", "محصول با موفقیت ویرایش شد");
             return res.redirect("/admin/allProduct")
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    // ? desc ==> single product 
+    // ? path ==> /admin/singleProduct/:id
+    async getsingleProductPage(req, res) {
+        try {
+            // ! get items 
+            const product = await Product.findOne({ _id: req.params.id }).populate("user");
+            console.log(product);
+            return res.render("admin/product/singleProduct", {
+                title: "محصول",
+                breadCrumb: "محصول",
+                error: req.flash("error"),
+                formData: req.flash("formData"),
+                product,
+                jalaliMoment,
+                separate
+            })
+
         } catch (err) {
             console.log(err.message);
         }
