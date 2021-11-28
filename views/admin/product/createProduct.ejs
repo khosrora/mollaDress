@@ -14,7 +14,7 @@
                                 <div class="col-lg-12 col-sm-12 col-xs-12">
                                     <div class="widget">
                                         <div class="widget-header bordered-bottom bordered-blue">
-                                            <span class="widget-caption">ساخت محصولات</span>
+                                            <span class="widget-caption">ویژگی محصولات</span>
                                         </div>
                                         <div class="widget-body">
                                             <div>
@@ -36,7 +36,7 @@
                                                         <div class="col-sm-12 col-md-6">
                                                             <div class="form-group">
                                                                 <h6>دسته بندی محصول</h6>
-                                                                <select id="e1" style="width: 100%;" name="categories">
+                                                                <select style="width: 100%;" name="categories">
                                                                     <% for (let item of categories) {%>
                                                                         <option value="<%= item.name %>">
                                                                             <%= item.name %>
@@ -48,7 +48,7 @@
                                                         <div class="col-sm-12 col-md-6">
                                                             <div class="form-group">
                                                                 <h6>برند محصول</h6>
-                                                                <select id="e1" style="width: 100%;" name="categories">
+                                                                <select style="width: 100%;" name="brand">
                                                                     <% for (let item of brands) {%>
                                                                         <option value="<%= item.name %>">
                                                                             <%= item.name %>

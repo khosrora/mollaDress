@@ -43,6 +43,26 @@ router.post("/editProduct", handle.isAdmin, productController.editProduct);
 // ? path ==> /admin/singleProduct/:id
 router.get("/singleProduct/:id", handle.isAdmin, productController.getsingleProductPage);
 
+// ? desc ==> create attr page 
+// ? path ==> /admin/createAttribute/:id
+router.get("/createAttribute/:id", handle.isAdmin, productController.getCreateAttributePage);
+
+// ? desc ==> create attr page 
+// ? path ==> /admin/createAttribute/:id
+router.post("/createAttribute", handle.isAdmin, productController.createAttributePage);
+
+// ? desc ==> edit attr  
+// ? path ==> /admin/editAttribute/:id
+router.get("/editAttribute/:id", handle.isAdmin, productController.getEditAttributePage);
+
+// ? desc ==> edit attr  
+// ? path ==> /admin/editAttribute/:id
+router.post("/editAttribute", handle.isAdmin, productController.editAttribute);
+
+// ? desc ==> delete attr  
+// ? path ==> /admin/deleteAttribute/:id
+router.get("/deleteAttribute/:id", handle.isAdmin, productController.deleteAttribute);
+
 
 
 

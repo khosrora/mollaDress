@@ -5,14 +5,13 @@ const appRoot = require('app-root-path');
 const Product = require('./model/Product');
 const Category = require('../categories/model/Category');
 const Brand = require('../brands/model/Brand');
+const Attribute = require('../products/model/Attribute');
 
 // *error handler
 const { get500 } = require('../../errorHandler');
 
 // * helper
 const controller = require('../../../helper/controller');
-const { slug } = require('../../../helper/slug');
-const { jalaliMoment } = require('../../../helper/jalali');
 const { separate } = require('../../../helper/seperate');
 
 
@@ -33,7 +32,7 @@ class productController extends controller {
                 message: req.flash("success_msg"),
                 error: req.flash("error"),
                 products,
-                jalaliMoment
+                jalaliMoment: this.jalaliMoment,
             })
         } catch (err) {
             console.log(err.message);
@@ -82,7 +81,7 @@ class productController extends controller {
             // ! get items
             req.body = { ...req.body };
             await Product.create({
-                ...req.body, slug: slug(req.body.title), image: files, user: req.user.id
+                ...req.body, slug: this.slug(req.body.title), image: files, user: req.user.id
             })
 
             // ! redirect
@@ -92,7 +91,6 @@ class productController extends controller {
             console.log(err.message);
             if (req.files.image) {
                 const images = req.files.image;
-                console.log(images);
                 for (let image of images) {
                     var { filename } = image;
                     fs.unlinkSync(`${appRoot}/public/uploads/images/products/` + filename);
@@ -125,7 +123,6 @@ class productController extends controller {
         }
     }
 
-
     // ? desc ==> edit product 
     // ? path ==> /admin/editProduct/:id
     async getEditProduct(req, res) {
@@ -137,7 +134,7 @@ class productController extends controller {
                 message: req.flash("success_msg"),
                 error: req.flash("error"),
                 product,
-                jalaliMoment
+                jalaliMoment: this.jalaliMoment,
             })
         } catch (err) {
             console.log(err.message);
@@ -159,7 +156,7 @@ class productController extends controller {
 
             // ! find product
             await Product.findByIdAndUpdate({ _id: req.body.id }, {
-                ...req.body, slug: slug(title)
+                ...req.body, slug: this.slug(req.body.title)
             })
             // ! send message
             req.flash("success_msg", "محصول با موفقیت ویرایش شد");
@@ -175,14 +172,16 @@ class productController extends controller {
         try {
             // ! get items 
             const product = await Product.findOne({ _id: req.params.id }).populate("user");
-            console.log(product);
+            const attributes = await Attribute.find({ product: product._id });
             return res.render("admin/product/singleProduct", {
                 title: "محصول",
                 breadCrumb: "محصول",
                 error: req.flash("error"),
                 formData: req.flash("formData"),
+                message: req.flash("success_msg"),
                 product,
-                jalaliMoment,
+                attributes,
+                jalaliMoment: this.jalaliMoment,
                 separate
             })
 
@@ -190,6 +189,107 @@ class productController extends controller {
             console.log(err.message);
         }
     }
+
+    // ? desc ==> create attr page 
+    // ? path ==> /admin/createAttribute/:id
+    async getCreateAttributePage(req, res) {
+        try {
+            // ! get items 
+            const product = await Product.findOne({ _id: req.params.id });
+
+            return res.render("admin/product/createAttribute", {
+                title: "ویژگی",
+                breadCrumb: "ویژگی",
+                error: req.flash("error"),
+                formData: req.flash("formData"),
+                product,
+            })
+
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    // ? desc ==> create attr page 
+    // ? path ==> /admin/createAttribute/:id
+    async createAttributePage(req, res) {
+        try {
+            // ! get items 
+            const { id } = req.body;
+            // ! validation
+            await Attribute.attributeValidate(req.body)
+
+            // ! create attribute
+            await Attribute.create({
+                ...req.body, product: id
+            })
+            // ! send message
+            req.flash("success_msg", "ویژگی محصول اضافه شد");
+            res.redirect("/admin/singleProduct/" + id)
+
+        } catch (err) {
+            console.log(err.message);
+            req.flash("error", err.message);
+            return this.back(req, res);
+        }
+    }
+
+    // ? desc ==> edit attr  
+    // ? path ==> /admin/editAttribute/:id
+    async getEditAttributePage(req, res) {
+        try {
+            // ! get items 
+            const attribute = await Attribute.findOne({ _id: req.params.id });
+
+            return res.render("admin/product/editAttribute", {
+                title: "ویرایش ویژگی محصول",
+                breadCrumb: "ویرایش ویژگی محصول",
+                error: req.flash("error"),
+                formData: req.flash("formData"),
+                attribute,
+            })
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    // ? desc ==> edit attr  
+    // ? path ==> /admin/editAttribute/:id
+    async editAttribute(req, res) {
+        try {
+            const { title, price, color, id, attributeId } = req.body;
+            // ! validation
+            if (!title || !price || !color || !id || !attributeId) {
+                req.flash("error", "لطفا تمام مقادیر را کامل کنید");
+                return this.back(req, res);
+            }
+            // ! edit attribute
+            await Attribute.findByIdAndUpdate({ _id: attributeId }, {
+                ...req.body, product: id
+            })
+            // ! send message
+            req.flash("success_msg", "ویژگی با موفقیت ویرایش شد");
+            res.redirect("/admin/singleProduct/" + id)
+        } catch (err) {
+            console.log(err.message);
+            req.flash("error", err.message);
+            return this.back(req, res);
+        }
+    }
+
+    // ? desc ==> create attr page 
+    // ? path ==> /admin/createAttribute/:id
+    async deleteAttribute(req, res) {
+        try {
+            await Attribute.findByIdAndDelete(req.params.id);
+            // ! send message
+            req.flash("error", "ویژگی با موفقیت حذف شد");
+            this.backURL(req, res)
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
 
 }
 module.exports = new productController;

@@ -8,113 +8,126 @@
             <!-- Page Content -->
             <div class="page-content">
                 <%- include("../../messages/error.ejs") %>
-                    <%- include("../includes/breadCrumb.ejs") %>
-                        <!-- Page Body -->
-                        <div class="page-body">
-                            <div class="row">
-                                <div class="col-lg-12 col-sm-12 col-xs-12">
-                                    <div class="well invoice-container">
+                    <%- include("../../messages/message.ejs") %>
+                        <%- include("../includes/breadCrumb.ejs") %>
+                            <!-- Page Body -->
+                            <div class="page-body">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="well invoice-container">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <h3 class="">
+                                                        <i class="fa fa-check"></i>
+                                                        <%= product.title %>
+                                                    </h3>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
-                                            <div class="col-xs-6">
-                                                <h3 class="">
-                                                    <i class="fa fa-check"></i>
-                                                    <%= product.title %>
-                                                </h3>
+                                            <div class="col-xs-5">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h6>سازنده : <%= product.user.fullname %>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <ul>
+                                                            <li>
+                                                                <%= product.user.mobile %>
+                                                            </li>
+                                                            <li>
+                                                                <%= product.user.email %>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-5 col-xs-offset-2 text-right">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h6>نام محصول : <%= product.slug %>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <ul>
+                                                            <li>
+                                                                <%= jalaliMoment(product.createdAt) %>
+                                                            </li>
+                                                            <li>مشاهده : <%= product.view %>
+                                                            </li>
+                                                            <li>برند : <%= product.brand %>
+                                                            </li>
+                                                            <li>دسته بندی : <%= product.categories %>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- / end client details section -->
+                                        <a href="/product/<%= product.slug %>" class="btn btn-warning text-white "> <i
+                                                class="fa fa-eye"></i> مشاهده در وب سایت</a>
+                                        <a href="/admin/createAttribute/<%= product._id %>" class="btn btn-success "> <i
+                                                class="fa fa-pencil"></i> ایجاد ویژگی جدید</a>
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <h5 class="no-margin-bottom">رنگ</h5>
+                                                    </th>
+                                                    <th>
+                                                        <h5 class="no-margin-bottom">سایز های موجود</h5>
+                                                    </th>
+                                                    <th>
+                                                        <h5 class="no-margin-bottom text-center">قیمت</h5>
+                                                    </th>
+                                                    <th>
+                                                        تعداد
+                                                    </th>
+                                                    <th>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for (let item of attributes) {%>
+                                                    <tr>
+                                                        <td style="background-color: '<%= item.color %>';"></td>
+                                                        <td>
+                                                            <ul
+                                                                style="display: flex; flex-direction: row;justify-content: space-between;">
+                                                                <% for (let i of item.sizes) {%>
+                                                                    <li>
+                                                                        <%= i %>
+                                                                    </li>
+                                                                    <%}%>
 
-                                            </div>
+                                                            </ul>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <%= separate(item.price) %>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <%= item.count %>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a href="/admin/deleteAttribute/<%= item._id %>" class="btn btn-danger"> <i class="fa fa-trash-o"></i>
+                                                                حذف</a>
+                                                            <a href="/admin/editAttribute/<%= item._id %>" class="btn btn-success"> <i class="fa fa-edit"></i>
+                                                                ویرایش</a>
+                                                        </td>
+                                                    </tr>
+                                                    <%}%>
+                                            </tbody>
+                                        </table>
+                                        <hr class="wide" />
+                                        <div class="invoice-notes">
+                                            <%- product.desc %>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-5">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h6>سازنده : <%= product.user.fullname %>
-                                                    </h6>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <ul>
-                                                        <li>
-                                                            <%= product.user.mobile %>
-                                                        </li>
-                                                        <li>
-                                                            <%= product.user.email %>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-5 col-xs-offset-2 text-right">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h6>نام محصول : <%= product.slug %>
-                                                    </h6>
-                                                </div>
-                                                <div class="panel-body">
-                                                    <ul>
-                                                        <li>
-                                                            <%= jalaliMoment(product.createdAt) %>
-                                                        </li>
-                                                        <li>مشاهده : <%= product.view %>
-                                                        </li>
-                                                        <li>برند : <%= product.brand %>
-                                                        </li>
-                                                        <li>دسته بندی : <%= product.categories %>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> <!-- / end client details section -->
-                                    <a href="/product/<%= product.slug %>" class="btn btn-warning text-white "> <i
-                                            class="fa fa-eye"></i> مشاهده در وب سایت</a>
-                                    <a href="/admin/createAttribute" class="btn btn-success "> <i
-                                            class="fa fa-pencil"></i> ایجاد ویژگی جدید</a>
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <h5 class="no-margin-bottom">رنگ</h5>
-                                                </th>
-                                                <th>
-                                                    <h5 class="no-margin-bottom">سایز های موجود</h5>
-                                                </th>
-                                                <th>
-                                                    <h5 class="no-margin-bottom text-center">قیمت</h5>
-                                                </th>
-                                                <th>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="background-color: red;"></td>
-                                                <td>
-                                                    <ul
-                                                        style="display: flex; flex-direction: row;justify-content: space-between;">
-                                                        <li>s</li>
-                                                        <li>xs</li>
-                                                        <li>m</li>
-                                                        <li>l</li>
-                                                    </ul>
-                                                </td>
-                                                <td class="text-center">
-                                                    <%= separate(50000) %>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a class="btn btn-danger"> <i class="fa fa-trash-o"></i> حذف</a>
-                                                    <a class="btn btn-success"> <i class="fa fa-edit"></i> ویرایش</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <hr class="wide" />
-                                    <div class="invoice-notes">
-                                        <%- product.desc %>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
-                        </div>
             </div>
             <!-- /Page Body -->
     </div>

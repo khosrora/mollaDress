@@ -1,11 +1,8 @@
-const autoBind = require('auto-bind');
+const helpers = require('./helpers');
 const fetch = require('node-fetch');
 
+module.exports = class controller extends helpers {
 
-module.exports = class controller {
-    constructor() {
-        autoBind(this);
-    }
 
     async recaptchaVerify(captcha) {
         const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${captcha}`;
@@ -27,4 +24,10 @@ module.exports = class controller {
         req.flash("formData", req.body)
         return res.redirect(req.header('Referer') || '/');
     }
+
+    backURL(req, res) {
+        const backUrl = req.header('Referer') || "/allProduct";
+        return res.redirect(backUrl);
+    }
+
 }

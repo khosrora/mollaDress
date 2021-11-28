@@ -6,7 +6,6 @@ const passport = require('passport');
 
 // * helper
 const controller = require('../../helper/controller');
-const nanoId = require('../../helper/nanoId');
 
 // *error handler
 const { get500 } = require('../errorHandler');
@@ -35,7 +34,7 @@ class userController extends controller {
             }
             // ! create new User
             const newUser = await User.create({
-                fullname, email, mobile, password, mobileActiveCode: nanoId()
+                fullname, email, mobile, password, mobileActiveCode: this.nanoId(6)
             })
             // ! redirect user
             req.flash("success_msg", "ثبت نام با موفقیت انجام شد");
@@ -153,7 +152,7 @@ class userController extends controller {
             // ! validate 
             if (user.mobileActiveCode == code) {
                 user.password = password;
-                user.mobileActiveCode = nanoId();
+                user.mobileActiveCode = this.nanoId(6);
                 await user.save();
                 // ! send message 
                 req.flash("success_msg", "کلمه عبور با موفقیت تغییر یافت");

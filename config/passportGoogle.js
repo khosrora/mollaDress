@@ -3,7 +3,10 @@ const googleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('../src/components/user/model/User');
 
 // * helper
-const nanoId = require('../src/helper/nanoId');
+const helpers = require('../src/helper/helpers');
+let helper = new helpers();
+
+
 
 
 passport.serializeUser(function (user, done) {
@@ -15,8 +18,6 @@ passport.deserializeUser(function (id, done) {
     done(err, user);
   });
 });
-
-
 
 passport.use(new googleStrategy({
   clientID: process.env.GOOGLE_CLIENT_KEY,
@@ -30,7 +31,7 @@ passport.use(new googleStrategy({
       fullname: profile.displayName,
       email: profile.emails[0].value,
       password: profile.id,
-      mobileActiveCode: nanoId(4)
+      mobileActiveCode: helper.nanoId(6)
     })
 
     newUser.save(err => {

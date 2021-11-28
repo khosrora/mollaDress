@@ -99,7 +99,7 @@ class brandsController extends controller {
             await Brand.findByIdAndDelete({ _id: req.params.id });
             // ! show message
             req.flash("error", "برند با موفقیت حذف شد");
-            res.redirect("/admin/getAllBrands")
+            res.redirect("/admin/getAllBrands");
         } catch (err) {
             console.log(err.message)
         }

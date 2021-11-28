@@ -12,7 +12,6 @@ module.exports = class Helpers {
     getObjects() {
         return {
             auth: this.auth(),
-            // old : this.old
         }
     }
 
@@ -23,8 +22,5 @@ module.exports = class Helpers {
         }
     }
 
-    // old(field, defaultValue = '') {
-    //     let formData = this.req.flash("formData")[0];
-    //     return formData && formData.hasOwnProperty(field) ? formData[field] : defaultValue;
-    // }
+
 }

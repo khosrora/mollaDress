@@ -7,7 +7,6 @@ const { get500 } = require('../errorHandler');
 // * helper
 const controller = require('../../helper/controller');
 const { separate } = require('../../helper/seperate');
-const { truncate } = require('../../helper/truncate');
 
 
 class publicController extends controller {
@@ -108,7 +107,6 @@ class publicController extends controller {
             // ! get items 
             const categories = await Category.find();
             const product = await Product.findOne({ slug: req.params.slug });
-            console.log(product);
 
             return res.render("public/pages/singleProduct.ejs", {
                 title: `${product.name}`,
@@ -116,9 +114,10 @@ class publicController extends controller {
                 categories,
                 product,
                 separate,
-                truncate
+                truncate: this.truncate,
             })
         } catch (err) {
+            console.log(err.message);
             get500(req, res)
         }
     }
