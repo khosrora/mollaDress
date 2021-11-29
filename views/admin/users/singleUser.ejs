@@ -1,0 +1,111 @@
+<!-- Main Container -->
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <%- include("../includes/aside.ejs") %>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <%- include("../../messages/error.ejs") %>
+                    <%- include("../../messages/message.ejs") %>
+                        <%- include("../includes/breadCrumb.ejs") %>
+                            <!-- Page Body -->
+                            <div class="page-body">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="well invoice-container">
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <h3 class="">
+                                                        <i class="fa fa-check"></i>
+                                                        <%= user.fullname %>
+                                                    </h3>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-5">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h6>
+                                                            اطلاعات کاربری
+                                                        </h6>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <ul>
+                                                            <li>
+                                                                <%= user.mobile %>
+                                                            </li>
+                                                            <li>
+                                                                <%= user.email %>
+                                                            </li>
+                                                            <li>
+                                                                <% if (user.isAdmin==='Admin' ) {%>
+                                                                    مدیر
+                                                                    <%}else{%>
+                                                                        کاربر
+                                                                        <%}%>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-5">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h6>
+                                                            وضعیت کاربر
+                                                        </h6>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <ul>
+                                                            <li>
+                                                                <% if (user.isBloocked===true ) {%>
+                                                                    فعال
+                                                                    <%}else{%>
+                                                                        غیر فعال
+                                                                        <%}%>
+                                                            </li>
+                                                            <li>
+                                                                <% if (user.isAdmin !=="Admin" ) {%>
+                                                                    <a href="" class="btn btn-success">مدیر شود</a>
+                                                                    <%}else {%>
+                                                                        <a href="" class="btn btn-success">کاربر شود</a>
+                                                                        <%}%>
+                                                            </li>
+                                                            <li>
+                                                                <form action="/admin/changeRole/<%=user._id %>"
+                                                                    method="post">
+                                                                    <select style="width:100%;"
+                                                                        onchange="this.form.submit()" name="role">
+                                                                        <option value="Manager">
+                                                                            مدیر اصلی
+                                                                        </option>
+                                                                        <option value="Assistance">
+                                                                            دستیار
+                                                                        </option>
+                                                                        <option value="Seller">
+                                                                            منشی
+                                                                        </option>
+                                                                    </select>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- / end client details section -->
+                                    </div>
+                                </div>
+                            </div>
+            </div>
+            <!-- /Page Body -->
+    </div>
+    <!-- /Page Content -->
+</div>
+<!-- /Page Container -->
+<!-- Main Container -->
+
+</div>
