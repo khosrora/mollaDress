@@ -8,7 +8,7 @@ const productController = require('./productController');
 // ! middleware
 const handle = require('../../../middleware/handle');
 const { uploadMultiple } = require('../../../middleware/multerMultiple');
-
+const gate = require('../../../helper/gate');
 
 router.use((req, res, next) => {
     res.locals.layout = "layouts/adminLayout"
@@ -17,11 +17,11 @@ router.use((req, res, next) => {
 
 // ? desc ==> getAllProductPage
 // ? path ==> /admin/Allproduct
-router.get("/allProduct", handle.isAdmin, productController.getAllProductPage);
+router.get("/allProduct", handle.isAdmin, gate.can("show-products"), productController.getAllProductPage);
 
 // ? desc ==> getCreateProductPage
 // ? path ==> /admin/createproduct
-router.get("/createproduct", handle.isAdmin, productController.getCreateProductPage);
+router.get("/createproduct", handle.isAdmin, gate.can("show-products"), productController.getCreateProductPage);
 
 // ? desc ==> createProductPage
 // ? path ==> /admin/createproduct

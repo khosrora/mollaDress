@@ -21,7 +21,7 @@
                                 <div class="col-xs-12 col-md-12">
                                     <div class="widget">
                                         <div class="widget-header ">
-                                            <span class="widget-caption">محصولات</span>
+                                            <span class="widget-caption">لیست سطوح دسترسی ها</span>
                                             <div class="widget-buttons">
                                                 <a href="#" data-toggle="maximize">
                                                     <i class="fa fa-expand"></i>
@@ -36,8 +36,8 @@
                                         </div>
                                         <div class="widget-body">
                                             <div class="table-toolbar">
-                                                <a href="/admin/admins" class="btn btn-default">
-                                                    مدیران
+                                                <a href="/admin/createroles" class="btn btn-default">
+                                                    ساخت نقش جدید
                                                 </a>
                                             </div>
                                             <table class="table table-striped table-hover table-bordered"
@@ -45,16 +45,10 @@
                                                 <thead>
                                                     <tr role="row">
                                                         <th>
-                                                            نام محصول
+                                                            نام سطوح دسترسی
                                                         </th>
                                                         <th>
-                                                            وضعیت
-                                                        </th>
-                                                        <th>
-                                                            تاریخ
-                                                        </th>
-                                                        <th>
-                                                            سازنده
+                                                            توضیح
                                                         </th>
                                                         <th>
                                                         </th>
@@ -62,33 +56,21 @@
                                                 </thead>
 
                                                 <tbody>
-                                                    <% for (let item of users) {%>
+                                                    <% for (let item of roles) {%>
                                                         <tr>
                                                             <td>
-                                                                <%= item.fullname %>
+                                                                <%= item.name %>
                                                             </td>
                                                             <td>
-                                                                <% if(item.isAdmin==="Admin" ) {%>
-                                                                    <span class="badge badge-success">مدیر</span>
-                                                                    <%}else {%>
-                                                                        <span class="badge badge-danger">کاربر</span>
-                                                                        <%}%>
+                                                                <%= item.label %>
                                                             </td>
                                                             <td>
-                                                                <%= jalaliMoment(item.createdAt) %>
-                                                            </td>
-                                                            <td class="center ">
-                                                                <%= item.mobile %>
-                                                            </td>
-                                                            <td>
-                                                                <a href="/admin/singleUser/<%= item._id %>"
-                                                                    class="btn btn-secondary btn-xs "><i
-                                                                        class="fa fa-eye"></i> مشاهده</a>
-                                                                <% if (item.isAdmin==="Admin" ) {%>
-                                                                    <a href="/admin/rolesUser/<%= item._id %>"
-                                                                        class="btn btn-secondary btn-xs "><i
-                                                                            class="fa fa-user"></i>انتخاب نقش</a>
-                                                                    <%}%>
+                                                                <a href="/admin/deleteroles/<%= item._id %>"
+                                                                    class="btn btn-danger btn-xs "><i
+                                                                        class="fa fa-trash"></i> حذف</a>
+                                                                <a href="/admin/editroles/<%= item._id %>"
+                                                                    class="btn btn-success btn-xs "><i
+                                                                        class="fa fa-trash"></i> ویرایش</a>
                                                             </td>
                                                         </tr>
                                                         <%}%>

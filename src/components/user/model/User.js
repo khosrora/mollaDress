@@ -11,7 +11,7 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     isBloocked: { type: Boolean, default: false },
     isAdmin: { type: String, enum: ["User", "Admin"], default: "User" },
-    role: { type: String, enum: ["Manager", "Assistance", "Seller", "Client"], default: "Client" },
+    roles: [{ type: Schema.Types.ObjectId, ref: "Role" }],
     mobileActiveCode: { type: Number, required: true },
     isMobileActive: { type: Boolean, default: false },
     Newsletters: { type: Number, default: 0 },
@@ -20,6 +20,14 @@ const userSchema = new Schema({
 
 
 }, { timestamps: true });
+
+userSchema.methods.hasRole = function(roles) { 
+    let result = roles.filter(role => {
+        return this.roles.indexOf(role) > -1;
+    })
+
+    return !! result.length;
+}
 
 userSchema.statics.userValidate = body => {
     return userValidation.validate(body)

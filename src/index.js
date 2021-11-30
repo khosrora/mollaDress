@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
-
+const gate = require('./helper/gate');
 
 // * Helpers
 const Helpers = require('./helper');
@@ -52,6 +52,8 @@ module.exports = class Application {
         app.set("layout extractScripts", true)
         // !Public Routes
         app.use(express.static(path.join(__dirname, "../public")))
+        // ! connect roles
+        app.use(gate.middleware());
         // ! validation login user
         app.use((req, res, next) => {
             app.locals = new Helpers(req, res).getObjects();
@@ -69,6 +71,7 @@ module.exports = class Application {
         app.use("/admin", require('./components/admin/categories/categoriesRouter'))
         app.use("/admin", require('./components/admin/brands/brandsRouter'))
         app.use("/admin", require('./components/admin/users/usersRouter'))
+        app.use("/admin", require('./components/admin/permissions/perrmissionsRouter'))
         // ! ERROR HANDLER
         app.use(require('./components/errorHandler').get404)
 

@@ -1,5 +1,6 @@
 // * Model
 const User = require('../../user/model/User');
+const Role = require('../../admin/permissions/model/Role');
 
 // *error handler
 const { get500 } = require('../../errorHandler');
@@ -76,12 +77,46 @@ class usersController extends controller {
 
     // ? desc ==> change role user 
     // ? path ==> /changeRole/:id
-    async changeRole(req, res) {
+    async getSetRoleUserPage(req, res) {
         try {
             // ! get items
-            console.log(req.body);
             const user = await User.findOne({ _id: req.params.id });
-            console.log(user);
+            const roles = await Role.find();
+
+            return res.render("admin/users/addRoleUser.ejs", {
+                title: "تعیین نقش ",
+                breadCrumb: "تعیین نقش ",
+                error: req.flash("error"),
+                message: req.flash("success_msg"),
+                jalaliMoment: this.jalaliMoment,
+                user,
+                roles
+            })
+
+
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+    // ? desc ==> change role user 
+    // ? path ==> /changeRole/:id
+    async setRoleUser(req, res) {
+        try {
+            // ! get items
+            const { id, roles } = req.body;
+            console.log(req.body);
+            if (!id || !roles) {
+                req.flash("error", "لطفا تمام مقادیر را وارد کنید ");
+                return this.back(req, res);
+            }
+            // ! put User
+            await User.findByIdAndUpdate({ _id: id }, {
+                roles
+            })
+
+            req.flash("success_msg", "نقش کاربر با موفقیت ویرایش شد");
+            return res.redirect("/admin/users")
 
         } catch (err) {
             console.log(err.message);

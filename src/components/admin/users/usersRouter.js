@@ -1,13 +1,15 @@
 const { Router } = require('express');
 const router = new Router();
 
-// ! controllers
+// * controllers
 const usersController = require('./usersController');
 
 
-// ! middleware
+// * middleware
 const handle = require('../../../middleware/handle');
 
+// * helper
+const gate = require('../../../helper/gate');
 
 router.use((req, res, next) => {
     res.locals.layout = "layouts/adminLayout"
@@ -28,7 +30,11 @@ router.get("/singleUser/:id", handle.isAdmin, usersController.getSingleUser);
 
 // ? desc ==> change role user 
 // ? path ==> /changeRole/:id
-router.post("/changeRole/:id", handle.isAdmin, usersController.changeRole);
+router.get("/rolesUser/:id", handle.isAdmin, usersController.getSetRoleUserPage);
+
+// ? desc ==> change role user 
+// ? path ==> /changeRole/:id
+router.post("/rolesUser", handle.isAdmin, usersController.setRoleUser);
 
 
 
