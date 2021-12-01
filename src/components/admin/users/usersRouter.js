@@ -18,23 +18,16 @@ router.use((req, res, next) => {
 
 // ? desc ==> get All Users Page
 // ? path ==> /users
-router.get("/users", handle.isAdmin, usersController.getAllUsersPage);
+router.get("/users", handle.isAdmin, gate.can("show-users"), usersController.getAllUsersPage);
 
 // ? desc ==> get All Admins Page
 // ? path ==> /admins
-router.get("/admins", handle.isAdmin, usersController.getAllAdminsPage);
+router.get("/admins", handle.isAdmin, gate.can("show-users"), usersController.getAllAdminsPage);
 
 // ? desc ==> get single Users Page
 // ? path ==> /singleUser/:id
-router.get("/singleUser/:id", handle.isAdmin, usersController.getSingleUser);
+router.get("/singleUser/:id", handle.isAdmin, gate.can("show-users"), usersController.getSingleUser);
 
-// ? desc ==> change role user 
-// ? path ==> /changeRole/:id
-router.get("/rolesUser/:id", handle.isAdmin, usersController.getSetRoleUserPage);
-
-// ? desc ==> change role user 
-// ? path ==> /changeRole/:id
-router.post("/rolesUser", handle.isAdmin, usersController.setRoleUser);
 
 
 

@@ -1,7 +1,7 @@
 const ConnectRoles = require('connect-roles');
 
 // * model 
-const Permission = require('../components/admin/permissions/model/Permission');
+// const Permission = require('../components/admin/permissions/model/Permission');
 
 const gate = new ConnectRoles({
     failureHandler: function (req, res, action) {
@@ -17,23 +17,58 @@ const gate = new ConnectRoles({
     }
 });
 
+gate.use('show-products', function (req) {
+    switch (req.user.role) {
+        case "Manager":
+            return true;
+        case "Seller":
+            return true;
+        case "Assistant":
+            return false;
+        case "Client":
+            return false;
+    }
+})
 
-const permissions = async () => {
-    return await Permission.find({}).populate('roles').exec();
-}
+gate.use('show-brands', function (req) {
+    switch (req.user.role) {
+        case "Manager":
+            return true;
+        case "Seller":
+            return true;
+        case "Assistant":
+            return false;
+        case "Client":
+            return false;
+    }
+})
 
+gate.use('show-categories', function (req) {
+    switch (req.user.role) {
+        case "Manager":
+            return true;
+        case "Seller":
+            return true;
+        case "Assistant":
+            return false;
+        case "Client":
+            return false;
+    }
+})
 
-permissions()
-    .then(permissions => {
-        permissions.forEach(permission => {
-            let roles = permission.roles.map(item => item._id);
-            gate.use(permission.name, (req) => {
-                return (req.isAuthenticated())
-                    ? req.user.hasRole(roles)
-                    : false;
-            });
-        })
-    });
+gate.use('show-users', function (req) {
+    switch (req.user.role) {
+        case "Manager":
+            return true;
+        case "Seller":
+            return false;
+        case "Assistant":
+            return true;
+        case "Client":
+            return false;
+    }
+})
+
 
 
 module.exports = gate;
