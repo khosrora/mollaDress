@@ -1,0 +1,35 @@
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('/assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">داشبورد<span>فروشگاه</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <%- include("../includes/bread") %>
+
+        <div class="page-content">
+            <div class="dashboard">
+                <div class="container">
+                    <div class="row">
+
+                        <%- include("./includes/aside") %>
+
+                            <div class="col-md-8 col-lg-9">
+                                <div class="col-lg-12">
+                                    <div class="card card-dashboard">
+                                        <div class="card-body">
+                                            <h3 class="card-title">اطلاعات کاربری شما</h3><!-- End .card-title -->
+
+                                            <p>
+                                                <%= user.fullname %><br>
+                                                    <%= user.email %><br>
+                                                        <%= user.mobile %><br>
+                                            </p>
+                                        </div><!-- End .card-body -->
+                                    </div><!-- End .card-dashboard -->
+                                </div><!-- End .col-lg-12 -->
+                            </div><!-- End .col-lg-9 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .dashboard -->
+        </div><!-- End .page-content -->
+</main><!-- End .main -->

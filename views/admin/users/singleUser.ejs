@@ -48,6 +48,18 @@
                                                                         کاربر
                                                                         <%}%>
                                                             </li>
+                                                            <li>
+                                                                <% if (user.role==='Manager' ) {%>
+                                                                    دسترسی به تمام بخش های وب سایت
+                                                                    <%} else if (user.role==='Seller' ) {%>
+                                                                        دسترسی به بخش های محصولات برندها و دسته بندی
+                                                                        ها
+                                                                        <%}else if (user.role==='Assistant' ) {%>
+                                                                            دسترسی به بخش کاربران
+                                                                            <%} else {%>
+                                                                                به هیچ بخشی دسترسی ندارد
+                                                                                <%}%>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -70,24 +82,32 @@
                                                             </li>
                                                             <li>
                                                                 <% if (user.isAdmin !=="Admin" ) {%>
-                                                                    <a href="" class="btn btn-success">مدیر شود</a>
+                                                                    <a href="/admin/changeAdmin/<%= user._id %>"
+                                                                        class="btn btn-success">مدیر شود</a>
                                                                     <%}else {%>
-                                                                        <a href="" class="btn btn-success">کاربر شود</a>
+                                                                        <a href="/admin/changeAdmin/<%= user._id %>"
+                                                                            class="btn btn-success">کاربر شود</a>
                                                                         <%}%>
                                                             </li>
                                                             <li>
                                                                 <form action="/admin/changeRole/<%=user._id %>"
                                                                     method="post">
+                                                                    <input type="hidden" name="id" id=""
+                                                                        value="<%= user._id %>">
                                                                     <select style="width:100%;"
                                                                         onchange="this.form.submit()" name="role">
+                                                                        <option value=""></option>
                                                                         <option value="Manager">
                                                                             مدیر اصلی
                                                                         </option>
-                                                                        <option value="Assistance">
+                                                                        <option value="Assistant">
                                                                             دستیار
                                                                         </option>
                                                                         <option value="Seller">
-                                                                            منشی
+                                                                            فروشنده
+                                                                        </option>
+                                                                        <option value="Client">
+                                                                            کاربر ساده
                                                                         </option>
                                                                     </select>
                                                                 </form>

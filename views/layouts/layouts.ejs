@@ -39,6 +39,8 @@
     <link rel="stylesheet" href="/assets/css/skins/skin-demo-29.css">
     <link rel="stylesheet" href="/assets/css/demos/demo-29.css">
     <link rel="stylesheet" href="/assets/css/iziToast.css">
+
+
 </head>
 
 <body>
@@ -57,9 +59,20 @@
                             <li>
                                 <% if (auth.check) {%>
                                     <ul>
-                                        <li class="login"><a href="/user/dashboard"><i class="icon-user"></i>پنل
-                                                کاربری</a></li>
-                                        <li class="login"><a href="/user/logout"><i class="icon-user"></i>خروج</a></li>
+                                        <li><%= auth.user.fullname %> عزیز خوش آمدید</li>
+                                        <% if (auth.user.isAdmin !=="Admin" ) { %>
+                                            <li class="login"><a href="/user/dashboard"><i class="icon-user"></i>پنل
+                                                    کاربری</a></li>
+                                            <li class="login"><a href="/user/logout"><i class="icon-user"></i>خروج</a>
+                                            </li>
+                                            <%}else {%>
+                                                <li class="login"><a href="/admin/dashboard"><i
+                                                            class="icon-user"></i>پنل
+                                                        مدیریت</a></li>
+                                                <li class="login"><a href="/user/logout"><i
+                                                            class="icon-user"></i>خروج</a>
+                                                </li>
+                                                <%}%>
                                     </ul>
                                     <%}else {%>
                                         <ul>
@@ -485,14 +498,13 @@
     <!-- ! validation -->
     <script src="/assets/js/my-js/validation.js"></script>
     <!-- ! validation -->
-    <!-- ! recaptcha v3 -->
-    <!-- ! recaptcha v3 -->
     <script src="/assets/js/iziToast.min.js"></script>
+    <script src="/assets/js/my-js/iranCity.js"></script>
+
     <%- script %>
 
 </body>
 
 
-<!-- Mirrored from filenter.ir/molla/index-29.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 04 Jul 2021 07:27:44 GMT -->
 
 </html>

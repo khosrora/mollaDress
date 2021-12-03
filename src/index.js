@@ -8,6 +8,8 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const gate = require('./helper/gate');
 
+
+
 // * Helpers
 const Helpers = require('./helper');
 
@@ -71,6 +73,7 @@ module.exports = class Application {
         app.use("/admin", require('./components/admin/categories/categoriesRouter'))
         app.use("/admin", require('./components/admin/brands/brandsRouter'))
         app.use("/admin", require('./components/admin/users/usersRouter'))
+        app.use("/admin", require('./components/admin/blogs/blogsRouter'))
         // ! ERROR HANDLER
         app.use(require('./components/errorHandler').get404)
 

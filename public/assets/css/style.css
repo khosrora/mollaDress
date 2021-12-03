@@ -26047,3 +26047,13 @@ button:focus {
 /* '' */
 
 /*# sourceMappingURL=style.css.map */
+
+select {
+  border: 1px solid #ffff !important;
+  background-color: #f9f9f9 !important;
+  padding: 1rem;
+}
+
+select:focus{
+  border: 1px solid #cc9966 !important;
+}

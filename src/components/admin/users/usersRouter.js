@@ -29,7 +29,13 @@ router.get("/admins", handle.isAdmin, gate.can("show-users"), usersController.ge
 router.get("/singleUser/:id", handle.isAdmin, gate.can("show-users"), usersController.getSingleUser);
 
 
+// ? desc ==> change is Admin 
+// ? path ==> /changeAdmin/:id
+router.get("/changeAdmin/:id", usersController.changeIsAdmin);
 
+// ? desc ==> change role User
+// ? path ==> /changeRole/:id
+router.post("/changeRole/:id", usersController.changeRole);
 
 
 module.exports = router;

@@ -39,5 +39,19 @@ router.post("/forgotPass", userController.forgotPass);
 // ? path ==> /changePass
 router.post("/changePass", userController.changePass);
 
+// ? desc ==> dashboard user
+// ? path ==> /user/dashboard
+router.get("/dashboard", userController.getDashboardUserPage);
+
+// ? desc ==> dashboard user
+// ? path ==> /user/addressuser
+router.get("/addressuser", userController.getAddressUserPage);
+
+// ? desc ==> dashboard user
+// ? path ==> /user/addressuser
+router.post("/addressuser", userController.AddressUser);
+
+
+
 
 module.exports = router;

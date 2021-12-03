@@ -36,8 +36,8 @@
                                         </div>
                                         <div class="widget-body">
                                             <div class="table-toolbar">
-                                                <a href="/admin/admins" class="btn btn-default">
-                                                    مدیران
+                                                <a href="/admin/createBlog" class="btn btn-default">
+                                                    ساخت بلاگ جدید
                                                 </a>
                                             </div>
                                             <table class="table table-striped table-hover table-bordered"
@@ -45,16 +45,16 @@
                                                 <thead>
                                                     <tr role="row">
                                                         <th>
-                                                            نام محصول
+                                                            نام
                                                         </th>
                                                         <th>
-                                                            وضعیت
+                                                            نویسنده
                                                         </th>
                                                         <th>
                                                             تاریخ
                                                         </th>
                                                         <th>
-                                                            شماره تماس
+                                                            بازدید
                                                         </th>
                                                         <th>
                                                         </th>
@@ -62,26 +62,28 @@
                                                 </thead>
 
                                                 <tbody>
-                                                    <% for (let item of users) {%>
+                                                    <% for (let item of blogs) {%>
                                                         <tr>
                                                             <td>
-                                                                <%= item.fullname %>
+                                                                <%= item.title %>
                                                             </td>
                                                             <td>
-                                                                <% if(item.isAdmin==="Admin" ) {%>
-                                                                    <span class="badge badge-success">مدیر</span>
-                                                                    <%}else {%>
-                                                                        <span class="badge badge-danger">کاربر</span>
-                                                                        <%}%>
+                                                                <%= item.user.fullname %>
                                                             </td>
                                                             <td>
                                                                 <%= jalaliMoment(item.createdAt) %>
                                                             </td>
                                                             <td class="center ">
-                                                                <%= item.mobile %>
+                                                                <%= item.view %>
                                                             </td>
                                                             <td>
-                                                                <a href="/admin/singleUser/<%= item._id %>"
+                                                                <a href="/admin/editblog/<%= item._id %>"
+                                                                    class="btn btn-info btn-xs"><i
+                                                                        class="fa fa-edit"></i>ویرایش</a>
+                                                                <a href="/admin/blogDelete/<%= item._id %>"
+                                                                    class="btn btn-danger btn-xs"><i
+                                                                        class="fa fa-trash"></i>حذف</a>
+                                                                <a href="/admin/singleblog/<%= item._id %>"
                                                                     class="btn btn-secondary btn-xs "><i
                                                                         class="fa fa-eye"></i> مشاهده</a>
                                                             </td>

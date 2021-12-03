@@ -74,5 +74,46 @@ class usersController extends controller {
         }
     }
 
+    // ? desc ==> change is Admin 
+    // ? path ==> /changeAdmin/:id
+    async changeIsAdmin(req, res) {
+        try {
+
+            // ! find user
+            const user = await User.findOne({ _id: req.params.id });
+            // ! change is admin
+            if (user.isAdmin === "Admin") {
+                user.isAdmin = "User";
+                await user.save();
+                return this.back(req, res);
+            } else {
+                user.isAdmin = "Admin";
+                await user.save();
+                return this.back(req, res);
+            }
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+
+    // ? desc ==> change role User
+    // ? path ==> /changeRole/:id
+    async changeRole(req, res) {
+        try {
+            // ! get items
+            const { role, id } = req.body;
+            // ! find user
+            const user = await User.findOne({ _id: id });
+            user.role = role;
+            await user.save();
+            req.flash("success_msg", "نقش کاربر با موفقیت تغییر یافت");
+            return res.redirect("/admin/users")
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+
 }
 module.exports = new usersController;

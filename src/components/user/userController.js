@@ -1,5 +1,6 @@
 // * Models
 const User = require('../user/model/User');
+const Category = require('../admin/categories/model/Category');
 
 // *packages
 const passport = require('passport');
@@ -166,5 +167,57 @@ class userController extends controller {
             console.log(err.message);
         }
     }
+
+    // ? desc ==> dashboard user
+    // ? path ==> /user/dashboard
+    async getDashboardUserPage(req, res) {
+        try {
+            // ! get user
+            const categories = await Category.find();
+            const user = req.user;
+
+            return res.render("user/index.ejs", {
+                title: "پنل کاربری",
+                breadCrumb: "پنل کاربری",
+                error: req.flash("error"),
+                categories,
+                user
+            })
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    // ? desc ==> dashboard user
+    // ? path ==> /user/addressUser
+    async getAddressUserPage(req, res) {
+        try {
+            // ! get user
+            const categories = await Category.find();
+            const user = req.user;
+
+            return res.render("user/addressUser.ejs", {
+                title: "آدرس های ثبت شده شما",
+                breadCrumb: "آدرس های ثبت شده شما",
+                error: req.flash("error"),
+                categories,
+                user
+            })
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    // ? desc ==> dashboard user
+    // ? path ==> /user/addressUser
+    async AddressUser(req, res) {
+        try {
+            console.log(req.body);
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+
 }
 module.exports = new userController();

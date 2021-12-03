@@ -14,7 +14,7 @@ class adminController {
             })
         } catch (err) {
             console.log(err.message);
-            get500(req, res)
+            get500(req, res);
         }
     }
 
