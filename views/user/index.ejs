@@ -6,30 +6,124 @@
     </div><!-- End .page-header -->
     <%- include("../includes/bread") %>
 
-        <div class="page-content">
-            <div class="dashboard">
-                <div class="container">
-                    <div class="row">
+        <%- include("../messages/error") %>
+            <%- include("../messages/message") %>
 
-                        <%- include("./includes/aside") %>
+                <div class="page-content">
+                    <div class="dashboard">
+                        <div class="container">
+                            <div class="row">
 
-                            <div class="col-md-8 col-lg-9">
-                                <div class="col-lg-12">
-                                    <div class="card card-dashboard">
-                                        <div class="card-body">
-                                            <h3 class="card-title">اطلاعات کاربری شما</h3><!-- End .card-title -->
+                                <%- include("./includes/aside") %>
 
-                                            <p>
-                                                <%= user.fullname %><br>
-                                                    <%= user.email %><br>
-                                                        <%= user.mobile %><br>
-                                            </p>
-                                        </div><!-- End .card-body -->
-                                    </div><!-- End .card-dashboard -->
-                                </div><!-- End .col-lg-12 -->
-                            </div><!-- End .col-lg-9 -->
-                    </div><!-- End .row -->
-                </div><!-- End .container -->
-            </div><!-- End .dashboard -->
-        </div><!-- End .page-content -->
+                                    <div class="col-md-8 col-lg-9">
+                                        <div class="col-lg-12">
+                                            <div class="card card-dashboard">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">اطلاعات کاربری شما</h3>
+                                                    <!-- End .card-title -->
+
+                                                    <p>
+                                                        <%= user.fullname %><br>
+                                                            <%= user.email %><br>
+                                                                <%= user.mobile %><br>
+                                                    </p>
+                                                    <% if (!user.mobile) {%>
+                                                        <form action="/user/addMobile" method="post" id="mobileUser">
+                                                            <div class="row">
+                                                                <div class="form-group col-sm-12 col-md-8 ">
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="شماره همراه" name="mobile">
+                                                                </div>
+
+                                                                <div class="btn-wrap  col-sm-12 col-md-2 ">
+                                                                    <button href="#"
+                                                                        class="btn btn-outline-primary btn-rounded "><span>ثبت</span><i
+                                                                            class="icon-long-arrow-left"></i></button>
+                                                                </div><!-- End .btn-wrap -->
+                                                            </div>
+                                                        </form>
+                                                        <%}%>
+                                                </div><!-- End .card-body -->
+                                            </div><!-- End .card-dashboard -->
+                                        </div><!-- End .col-lg-12 -->
+
+
+                                        <!-- ! address -->
+                                        <% if (address.length> 0) {%>
+                                            <div class="col-lg-12">
+                                                <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">آدرس های ثبت شده</h3>
+                                                        <!-- End .card-title -->
+                                                        <% for (let i of address){%>
+                                                            <p>
+                                                                <%= i.reciver %><br>
+                                                                    <%= i.postalCode %><br>
+                                                                        <%= i.city %><br>
+                                                                            <%= i.state %><br>
+                                                                                <%= i.address %><br>
+                                                            </p>
+                                                            <div class="btn-wrap  col-sm-12 col-md-2 ">
+                                                                <a href="/user/addressDelete/<%= i._id %>"
+                                                                    class="btn btn-outline-primary btn-rounded "><span>حذف</span><i
+                                                                        class="icon-long-arrow-left"></i></a>
+                                                            </div><!-- End .btn-wrap -->
+                                                            <hr class="">
+                                                            <%}%>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                            </div><!-- End .col-lg-12 -->
+                                            <%}else {%>
+                                                <div class="float-right">
+                                                    <a href="/user/addressuser">لطفا قبل از خرید آدرس خود را ثبت
+                                                        کنید</a>
+                                                </div>
+                                                <%}%>
+                                                    <!-- ! address -->
+                                    </div><!-- End .col-lg-9 -->
+
+                            </div><!-- End .row -->
+                        </div><!-- End .container -->
+                    </div><!-- End .dashboard -->
+                </div><!-- End .page-content -->
 </main><!-- End .main -->
+
+<script>
+    jQuery.extend(jQuery.validator.messages, {
+        required: "وارد کردن این فیلد ضروری است",
+        email: "پست الکترونیک درست وارد نشده است",
+        number: "لطفا بصورت عدد وارد کنید",
+        maxlength: jQuery.validator.format("کلمه عبور خود را بیشتر از 30 کاراکتر انتخاب نکنید"),
+        minlength: jQuery.validator.format(".کلمه عبور خود را کمتر از 8 کاراکتر انتخاب نکنید"),
+    });
+
+    $(document).ready(function () {
+        $.validator.setDefaults({
+            highlight: function (element) {
+                $(element)
+                    .closest(".form-group")
+                    .addClass("has-error")
+            }
+        });
+
+        $.validator.addMethod(
+            "regex",
+            function (value, element, regexp) {
+                var re = new RegExp(regexp);
+                return this.optional(element) || re.test(value);
+            },
+            "لطفا شماره تماس را چک کنید"
+        );
+
+        $('#mobileUser').validate(
+            {
+                rules: {
+                    mobile: {
+                        required: true,
+                        regex: "09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}"
+                    }
+                }
+            });
+    });
+</script>

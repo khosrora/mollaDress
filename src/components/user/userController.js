@@ -1,5 +1,6 @@
 // * Models
 const User = require('../user/model/User');
+const Address = require('../user/model/Address');
 const Category = require('../admin/categories/model/Category');
 
 // *packages
@@ -174,17 +175,20 @@ class userController extends controller {
         try {
             // ! get user
             const categories = await Category.find();
+            const address = await Address.find({ user: req.user._id });
             const user = req.user;
-
             return res.render("user/index.ejs", {
                 title: "پنل کاربری",
                 breadCrumb: "پنل کاربری",
                 error: req.flash("error"),
+                message: req.flash("success_msg"),
                 categories,
-                user
+                user,
+                address
             })
         } catch (err) {
             console.log(err.message);
+            get500(req, res)
         }
     }
 
@@ -200,11 +204,13 @@ class userController extends controller {
                 title: "آدرس های ثبت شده شما",
                 breadCrumb: "آدرس های ثبت شده شما",
                 error: req.flash("error"),
+                message: req.flash("success_msg"),
                 categories,
                 user
             })
         } catch (err) {
             console.log(err.message);
+            get500(req, res)
         }
     }
 
@@ -212,9 +218,70 @@ class userController extends controller {
     // ? path ==> /user/addressUser
     async AddressUser(req, res) {
         try {
-            console.log(req.body);
+            // ! get items
+            const body = { ...req.body };
+            // ! validation
+            if (!req.user.mobile) {
+                req.flash("error", "لطفا ابتدا شماره همراه خود را ثبت کنید");
+                return this.back(req, res);
+            }
+            await Address.addressValidate(req.body)
+            // ! create address
+            await Address.create({
+                ...body, user: req.user._id
+            });
+            // ! send message 
+            req.flash("success_msg", "آدرس شما با موفقیت اضافه شد");
+            res.redirect("/user/dashboard")
         } catch (err) {
             console.log(err.message);
+            req.flash("error", err.message);
+            return this.back(req, res);
+        }
+    }
+
+    // ? desc ==> add Mobile user
+    // ? path ==> /user/addMobile
+    async addMobile(req, res) {
+        try {
+            // ! get items 
+            const { mobile } = req.body;
+            // ! validate
+            if (!mobile) {
+                req.flash("error", "لطفا  شماره همراه خود را ثبت کنید");
+                return this.back(req, res);
+            }
+            // ! edit user
+            await User.findByIdAndUpdate({ _id: req.user.id }, {
+                mobile
+            })
+            // ! send message
+            req.flash("success_msg", "شماره همراه شما ثبت شد");
+            return this.back(req, res);
+        } catch (err) {
+            console.log(err.message);
+            req.flash("error", err.message);
+            return this.back(req, res);
+        }
+    }
+
+    // ? desc ==> add Mobile user
+    // ? path ==> /user/addMobile
+    async addressDelete(req, res) {
+        try {
+            // ! find address
+            const address = await Address.findByIdAndRemove({ _id: req.params.id });
+            // ! validation
+            if (!address) {
+                req.flash("error", "آدرس مورد نظر یافت نشد");
+                return this.back(req, res);
+            }
+            // ! send message
+            req.flash("error", "آدرس شما حذف شد");
+            return this.back(req, res);
+        } catch (err) {
+            console.log(err.message);
+
         }
     }
 

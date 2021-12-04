@@ -51,6 +51,14 @@ router.get("/addressuser", userController.getAddressUserPage);
 // ? path ==> /user/addressuser
 router.post("/addressuser", userController.AddressUser);
 
+// ? desc ==> add Mobile user
+// ? path ==> /user/addMobile
+router.post("/addMobile", userController.addMobile);
+
+// ? desc ==> address User Delete
+// ? path ==> /user/addressDelete
+router.get("/addressDelete/:id", userController.addressDelete);
+
 
 
 
