@@ -10,6 +10,7 @@ const addressSchema = new Schema({
     state: { type: String, required: true },
     address: { type: String, required: true },
     reciver: { type: String, required: true },
+    isActive: { type: Boolean, default: "false" },
 
 }, { timestamps: true });
 

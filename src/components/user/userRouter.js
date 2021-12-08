@@ -59,6 +59,25 @@ router.post("/addMobile", userController.addMobile);
 // ? path ==> /user/addressDelete
 router.get("/addressDelete/:id", userController.addressDelete);
 
+// ? desc ==>  User edit
+// ? path ==> /user/editUser
+router.get("/editUser", userController.getEditUserPage);
+
+// ? desc ==>  User edit
+// ? path ==> /user/editUser
+router.post("/editUser", userController.editUser);
+
+// ? desc ==> check out user
+// ? path ==> auth/checkout
+router.get("/payment", userController.payment);
+
+// ? desc ==> verify check out user
+// ? path ==> auth/verifyPayment
+router.get("/verifyPayment", userController.verifyPayment);
+
+// ? desc ==> change address active
+// ? path ==> auth/changeisActive/:id
+router.get("/changeisActive/:id", userController.changeisActive);
 
 
 

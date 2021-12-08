@@ -225,7 +225,7 @@
 
             <div class="cta-newsletter text-center">
                 <span class="cta-icon"><i class="icon-envelope"></i></span>
-                <h3 class="title font-weight-semibold">با ایمیل خود ثبت نام کنید و 25% تخفیف بگیرید</h3>
+                <h3 class="title font-weight-semibold">پست الکترونیک خودت رو سریع وارد کن !!!</h3>
                 <!-- End .title -->
                 <p class="title-desc">در خبرنامه ما عضو شوید و از آخرین محصولات و تخفیف های جدید با خبر شوید</p>
                 <!-- End .title-desc -->
@@ -236,7 +236,7 @@
                             aria-label="Email Adress" aria-describedby="newsletter-btn" required>
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit" id="newsletter-btn">
-                                <span class="font-weight-semibold">عضویت</span></button>
+                                <span class="font-weight-semibold">ارسال کن</span></button>
                         </div><!-- .End .input-group-append -->
                     </div><!-- .End .input-group -->
                 </form>
@@ -427,7 +427,7 @@
                 </div><!-- End .heading-left -->
 
                 <div class="heading-right">
-                    <a href="#" class="title-link font-weight-normal">مشاهده بیشتر <i
+                    <a href="/blogs" class="title-link font-weight-normal">مشاهده بیشتر <i
                             class="icon-long-arrow-left"></i></a>
                 </div><!-- End .heading-right -->
             </div><!-- End .heading -->
@@ -458,105 +458,38 @@
                     }
                 }
             }'>
-                <article class="entry">
-                    <figure class="entry-media banner-overlay">
-                        <a href="single.html">
-                            <img src="assets/images/demos/demo-29/blogs/post-1.jpg" alt="image desc"
-                                style="background-color: #ccc;">
-                        </a>
-                    </figure><!-- End .entry-media -->
 
-                    <div class="entry-body">
-                        <div class="entry-meta">
-                            <a href="#">22 آذر 1399,</a>
-                            <a href="#">0 دیدگاه</a>
-                        </div><!-- End .entry-meta -->
+                <% for (let i of blogs) {%>
+                    <article class="entry">
+                        <figure class="entry-media banner-overlay">
+                            <a href="blog/<%= i.slug %>">
+                                <img src="uploads/images/blogs/<%= i.image %>" alt="<%= i.slug %>"
+                                    style="background-color: #ccc; height: 40rem !important;object-fit: cover;">
+                            </a>
+                        </figure><!-- End .entry-media -->
 
-                        <h3 class="entry-title">
-                            <a href="single.html">لورم ایپسوم متن ساختگی</a>
-                        </h3><!-- End .entry-title -->
+                        <div class="entry-body">
+                            <div class="entry-meta">
+                                <a href="/blog/<%= i.slug %>">
+                                    <%= jalaliMoment( i.createdAt) %>,
+                                </a>
+                                <a href="/blog/<%= i.slug %>">
+                                    <%= i.view%>بازدید
+                                </a>
+                            </div><!-- End .entry-meta -->
 
-                        <div class="entry-content">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم، لورم ایپسوم متن ساختگی با تولید سادگی
-                            نامفهوم، لورم ایپسوم
-                        </div><!-- End .entry-content -->
-                    </div><!-- End .entry-body -->
-                </article><!-- End .entry -->
+                            <h3 class="entry-title">
+                                <a href="/blog/<%= i.slug %>">
+                                    <%= i.title %>
+                                </a>
+                            </h3><!-- End .entry-title -->
 
-                <article class="entry">
-                    <figure class="entry-media banner-overlay">
-                        <a href="single.html">
-                            <img src="assets/images/demos/demo-29/blogs/post-2.jpg" alt="image desc"
-                                style="background-color: #ccc;">
-                        </a>
-                    </figure><!-- End .entry-media -->
-
-                    <div class="entry-body">
-                        <div class="entry-meta">
-                            <a href="#">22 آذر 1399,</a>
-                            <a href="#">0 دیدگاه</a>
-                        </div><!-- End .entry-meta -->
-
-                        <h3 class="entry-title">
-                            <a href="single.html">متن سادگی با تولید سادگی</a>
-                        </h3><!-- End .entry-title -->
-
-                        <div class="entry-content">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم، لورم ایپسوم متن ساختگی با تولید سادگی
-                            نامفهوم، متن ساختگی نامفهوم
-                        </div><!-- End .entry-content -->
-                    </div><!-- End .entry-body -->
-                </article><!-- End .entry -->
-
-                <article class="entry">
-                    <figure class="entry-media banner-overlay">
-                        <a href="single.html">
-                            <img src="assets/images/demos/demo-29/blogs/post-3.jpg" alt="image desc"
-                                style="background-color: #ccc;">
-                        </a>
-                    </figure><!-- End .entry-media -->
-
-                    <div class="entry-body">
-                        <div class="entry-meta">
-                            <a href="#">22 آذر 1399,</a>
-                            <a href="#">0 دیدگاه</a>
-                        </div><!-- End .entry-meta -->
-
-                        <h3 class="entry-title">
-                            <a href="single.html">تولید سادگی نامفهوم در صنعت چاپ</a>
-                        </h3><!-- End .entry-title -->
-
-                        <div class="entry-content">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم، لورم ایپسوم متن ساختگی با تولید سادگی
-                            نامفهوم، لورم ایپسوم متن ساختگی با تولید سادگی
-                        </div><!-- End .entry-content -->
-                    </div><!-- End .entry-body -->
-                </article><!-- End .entry -->
-
-                <article class="entry">
-                    <figure class="entry-media banner-overlay">
-                        <a href="single.html">
-                            <img src="assets/images/demos/demo-29/blogs/post-4.jpg" alt="image desc"
-                                style="background-color: #ccc;">
-                        </a>
-                    </figure><!-- End .entry-media -->
-
-                    <div class="entry-body">
-                        <div class="entry-meta">
-                            <a href="#">22 آذر 1399,</a>
-                            <a href="#">0 دیدگاه</a>
-                        </div><!-- End .entry-meta -->
-
-                        <h3 class="entry-title">
-                            <a href="single.html">متن سادگی نامفهوم</a>
-                        </h3><!-- End .entry-title -->
-
-                        <div class="entry-content">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم، لورم ایپسوم متن ساختگی با تولید سادگی
-                            نامفهوم، لورم ایپسوم متن ساختگی
-                        </div><!-- End .entry-content -->
-                    </div><!-- End .entry-body -->
-                </article><!-- End .entry -->
+                            <div class="entry-content">
+                                <%- truncate( i.desc , 150) %>
+                            </div><!-- End .entry-content -->
+                        </div><!-- End .entry-body -->
+                    </article><!-- End .entry -->
+                    <%}%>
             </div><!-- End .owl-carousel -->
         </div>
         <!--End .container-->

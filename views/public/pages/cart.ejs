@@ -1,0 +1,97 @@
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('/assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">سبد خرید<span>فروشگاه</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <%- include("../../includes/bread") %>
+        <%- include("../../messages/error") %>
+            <%- include("../../messages/message") %>
+                <div class="page-content">
+                    <div class="cart">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <table class="table table-cart table-mobile">
+                                        <thead>
+                                            <tr>
+                                                <th>محصول</th>
+                                                <th>قیمت</th>
+                                                <th>تعداد</th>
+                                                <th>سایز</th>
+                                                <th>تعداد</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody class="cart__items">
+
+                                        </tbody>
+                                    </table><!-- End .table table-wishlist -->
+                                    <% if (auth.user) {%>
+                                        <div class="cart-bottom">
+                                            <div class="cart-discount">
+                                                <form action="#">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" required
+                                                            placeholder="کد تخفیف">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-primary-2" type="submit"><i
+                                                                    class="icon-long-arrow-left"></i></button>
+                                                        </div><!-- .End .input-group-append -->
+                                                    </div><!-- End .input-group -->
+                                                </form>
+                                            </div><!-- End .cart-discount -->
+                                        </div><!-- End .cart-bottom -->
+                                        <%}%>
+                                </div><!-- End .col-lg-9 -->
+                                <aside class="col-lg-3">
+                                    <% if (auth.user) {%>
+                                        <div class="summary summary-cart">
+                                            <table class="table table-summary">
+                                                <tbody>
+                                                    <tr class="summary-subtotal">
+                                                        <td>جمع کل سبد خرید : </td>
+                                                        <td class="text-left cart_amount">0 تومان</td>
+                                                    </tr><!-- End .summary-subtotal -->
+                                                    <tr class="summary-shipping">
+                                                        <td>هزینه ارسال : </td>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                    <tr class="summary-shipping-row">
+                                                        <td>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="standart-shipping"
+                                                                    name="shipping" class="custom-control-input"
+                                                                    disabled>
+                                                                <label class="custom-control-label"
+                                                                    for="standart-shipping">پست
+                                                                    سفارشی :</label>
+                                                            </div><!-- End .custom-control -->
+                                                        </td>
+                                                        <td class="text-left">30,000 تومان</td>
+                                                    </tr><!-- End .summary-shipping-row -->
+
+                                                            <tr class="summary-total">
+
+                                                                <td>مبلغ قابل پرداخت :</td>
+                                                                <td class="text-left cart_amount-t">0 تومان</td>
+                                                            </tr><!-- End .summary-total -->
+                                                </tbody>
+                                            </table><!-- End .table table-summary -->
+
+                                            <a href="/user/payment"
+                                                class="btn btn-outline-primary-2 btn-order btn-block p-4">
+                                                پرداخت</a>
+                                        </div><!-- End .summary -->
+                                        <%}else {%>
+                                            <div class="summary summary-cart">
+                                                <a href="/login">برای پرداخت لطفا ابتدا وارد وب سایت شوید</a>
+                                            </div><!-- End .summary -->
+                                            <%}%>
+                                </aside><!-- End .col-lg-3 -->
+                            </div><!-- End .row -->
+                        </div><!-- End .container -->
+                    </div><!-- End .cart -->
+                </div><!-- End .page-content -->
+</main><!-- End .main -->

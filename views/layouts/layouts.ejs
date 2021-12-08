@@ -59,7 +59,9 @@
                             <li>
                                 <% if (auth.check) {%>
                                     <ul>
-                                        <li><%= auth.user.fullname %> عزیز خوش آمدید</li>
+                                        <li>
+                                            <%= auth.user.fullname %> عزیز خوش آمدید
+                                        </li>
                                         <% if (auth.user.isAdmin !=="Admin" ) { %>
                                             <li class="login"><a href="/user/dashboard"><i class="icon-user"></i>پنل
                                                     کاربری</a></li>
@@ -115,86 +117,13 @@
                     </div><!-- End .header-left -->
 
                     <div class="header-right">
-                        <a href="wishlist.html" class="wishlist-link">
-                            <i class="icon-heart-o"></i>
-                            <span class="wishlist-count">3</span>
-                            <span class="wishlist-txt">علاقه مندی</span>
-                        </a>
-                        <!--End .wishlist-link-->
-
                         <div class="dropdown cart-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <a href="/cart" class="dropdown-toggle">
                                 <i class="icon-shopping-cart"></i>
-                                <span class="cart-count">2</span>
+                                <span class="cart-count">0</span>
                                 <span class="cart-txt font-weight-semibold">164,000 تومان</span>
                             </a>
                             <!--End .dropdown-toggle-->
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="dropdown-cart-products">
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html">تی شرت هودی بلند</a>
-                                            </h4>
-                                            <!--End .product-title-->
-
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1 x </span>
-                                                170,000 تومان
-                                            </span>
-                                            <!--End .cart-product-info-->
-                                        </div><!-- End .product-cart-details -->
-
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="assets/images/demos/demo-29/products/5-1.jpg" alt="product"
-                                                    width="60" height="60">
-                                            </a>
-                                        </figure>
-                                        <!--End .product-image-container-->
-
-                                        <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html">تی شرت تک سایز صورتی</a>
-                                            </h4>
-                                            <!--End .product-title-->
-
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1 x </span>
-                                                120,980 تومان
-                                            </span>
-                                            <!--End .cart-product-info-->
-                                        </div><!-- End .product-cart-details -->
-
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="assets/images/demos/demo-29/products/10-1.jpg" alt="product"
-                                                    width="60" height="60">
-                                            </a>
-                                        </figure>
-                                        <!--End .product-image-container-->
-
-                                        <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-                                </div><!-- End .dropdown-cart-product -->
-
-                                <div class="dropdown-cart-total">
-                                    <span>مجموع</span>
-                                    <span class="cart-total-price">290,980 تومان</span>
-                                </div><!-- End .dropdown-cart-total -->
-
-                                <div class="dropdown-cart-action">
-                                    <a href="cart.html" class="btn btn-primary">مشاهده سبد خرید</a>
-                                    <a href="checkout.html" class="btn btn-outline-primary-2"><span>پرداخت</span><i
-                                            class="icon-long-arrow-left"></i></a>
-                                </div><!-- End .dropdown-cart-action -->
-                            </div><!-- End .dropdown-menu -->
                         </div><!-- End .cart-dropdown -->
                     </div>
                     <!--End .header-right-->
@@ -211,32 +140,31 @@
 
                                 </li>
                                 <li>
-                                    <a href="blog.html" class="sf-with-ul">صفحات</a>
+                                    <a href="#" class="sf-with-ul">صفحات</a>
 
                                     <ul>
-                                        <li><a href="blog.html">درباره ما</a></li>
-                                        <li><a href="blog-listing.html">تماس با ما</a></li>
+                                        <li><a href="/products">محصولات</a></li>
+                                        <li><a href="/aboutUs">درباره ما</a></li>
+                                        <li><a href="/contactUs">تماس با ما</a></li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="product.html" class="sf-with-ul">محصول</a>
+                                    <a href="#" class="sf-with-ul">محصول</a>
 
                                     <div class="megamenu megamenu-sm">
                                         <div class="row no-gutters">
                                             <div class="col-md-6">
                                                 <div class="menu-col">
-                                                    <div class="menu-title">جزئیات محصول</div>
+                                                    <div class="menu-title">دسته بندی محصولات</div>
                                                     <!-- End .menu-title -->
                                                     <ul>
-                                                        <li><a href="product.html">پیش فرض</a></li>
-                                                        <li><a href="product-centered.html">توضیحات وسط چین</a></li>
-                                                        <li><a href="product-extended.html"><span>توضیحات گسترده<span
-                                                                        class="tip tip-new">جدید</span></span></a></li>
-                                                        <li><a href="product-gallery.html">گالری</a></li>
-                                                        <li><a href="product-sticky.html">اطلاعات چسبیده</a></li>
-                                                        <li><a href="product-sidebar.html">صفحه جمع با سایدبار</a></li>
-                                                        <li><a href="product-fullwidth.html">تمام عرض</a></li>
-                                                        <li><a href="product-masonry.html">اطلاعات چسبیده</a></li>
+                                                        <% for (i of categories) {%>
+                                                            <% if (i.category===null) {%>
+                                                                <li><a href="product.html">
+                                                                        <%= i.name %>
+                                                                    </a></li>
+                                                                <%}%>
+                                                                    <%}%>
                                                     </ul>
                                                 </div><!-- End .menu-col -->
                                             </div><!-- End .col-md-6 -->
@@ -372,7 +300,6 @@
                                             <ul class="widget-list">
                                                 <li><a href="/login">ورود</a></li>
                                                 <li><a href="cart.html">سبد خرید</a></li>
-                                                <li><a href="#">لیست علاقه مندی ها</a></li>
                                                 <li><a href="#">پیگیری سفارشات</a></li>
                                                 <li><a href="#">راهنما</a></li>
                                             </ul><!-- End .widget-list -->
@@ -440,7 +367,6 @@
                         <ul>
                             <li><a href="/faq">سوالات متداول</a></li>
                             <li><a href="/products">محصولات</a></li>
-
                         </ul>
                     </li>
                     <li>
@@ -500,6 +426,7 @@
     <!-- ! validation -->
     <script src="/assets/js/iziToast.min.js"></script>
     <script src="/assets/js/my-js/iranCity.js"></script>
+    <script src="/assets/js/my-js/cart.js"></script>
 
     <%- script %>
 

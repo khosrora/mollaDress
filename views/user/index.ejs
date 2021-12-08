@@ -55,6 +55,7 @@
                                                 <div class="card card-dashboard">
                                                     <div class="card-body">
                                                         <h3 class="card-title">آدرس های ثبت شده</h3>
+                                                        <p class="text-danger">بعد از ثبت خرید سفارشات شما به یکی از آدرس های فعال ارسال میشود.</p>
                                                         <!-- End .card-title -->
                                                         <% for (let i of address){%>
                                                             <p>
@@ -63,11 +64,27 @@
                                                                         <%= i.city %><br>
                                                                             <%= i.state %><br>
                                                                                 <%= i.address %><br>
+                                                                                    <% if (i.isActive) {%>
+                                                                                        آدرس فعال است <br>
+                                                                                        <%}else {%>
+                                                                                            آدرس فعال نیست <br>
+                                                                                            <%}%>
                                                             </p>
                                                             <div class="btn-wrap  col-sm-12 col-md-2 ">
                                                                 <a href="/user/addressDelete/<%= i._id %>"
                                                                     class="btn btn-outline-primary btn-rounded "><span>حذف</span><i
                                                                         class="icon-long-arrow-left"></i></a>
+                                                                <% if (i.isActive) {%>
+                                                                    <a href="/user/changeisActive/<%= i._id %>"
+                                                                        class="btn btn-outline-primary btn-rounded my-3"><span>غیر
+                                                                            فعال </span><i
+                                                                            class="icon-long-arrow-left"></i></a>
+                                                                    <%}else {%>
+                                                                        <a href="/user/changeisActive/<%= i._id %>"
+                                                                            class="btn btn-outline-primary btn-rounded my-3"><span>
+                                                                                فعال</span><i
+                                                                                class="icon-long-arrow-left"></i></a>
+                                                                        <%}%>
                                                             </div><!-- End .btn-wrap -->
                                                             <hr class="">
                                                             <%}%>

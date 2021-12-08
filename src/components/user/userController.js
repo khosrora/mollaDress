@@ -1,5 +1,9 @@
+const ZarinpalCheckout = require('zarinpal-checkout');
+const zarinpal = ZarinpalCheckout.create('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', true);
+
 // * Models
 const User = require('../user/model/User');
+const Cart = require('../user/model/Cart');
 const Address = require('../user/model/Address');
 const Category = require('../admin/categories/model/Category');
 
@@ -11,6 +15,7 @@ const controller = require('../../helper/controller');
 
 // *error handler
 const { get500 } = require('../errorHandler');
+
 
 class userController extends controller {
 
@@ -285,6 +290,163 @@ class userController extends controller {
         }
     }
 
+    // ? desc ==> add Mobile user
+    // ? path ==> /user/addMobile
+    async getEditUserPage(req, res) {
+        try {
+            // ! get user
+            const categories = await Category.find();
+            const user = req.user;
+
+            return res.render("user/editUser.ejs", {
+                title: "ویرایش اطلاعات کاربری",
+                breadCrumb: "ویرایش اطلاعات کاربری",
+                error: req.flash("error"),
+                message: req.flash("success_msg"),
+                categories,
+                user
+            })
+        } catch (err) {
+            console.log(err.message);
+
+        }
+    }
+
+    // ? desc ==> add Mobile user
+    // ? path ==> /user/addMobile
+    async editUser(req, res) {
+        try {
+            // ! get items
+            const { fullname, mobile, email } = req.body;
+            // ! validate
+            if (!fullname || !mobile || !email) {
+                req.flash("error", "اطلاعات را بصورت کامل وارد کنید");
+                return this.back(req, res);
+            }
+            // ! edit user
+            await User.findByIdAndUpdate({ _id: req.user._id }, {
+                ...req.body
+            })
+            // ! send message
+            req.flash("success_msg", "اطلاعات شما با موفقیت ویرایش شد");
+            return res.redirect("/user/dashboard")
+
+        } catch (err) {
+            console.log(err.message);
+
+        }
+    }
+
+    // ? desc ==> check out user
+    // ? path ==> auth/checkout
+    async payment(req, res) {
+        try {
+            // ! get items
+            const user = req.user;
+            // ! validation
+            if (!user) {
+                req.flash("error", "لطفا برای پرداخت ابتدا وارد وب سایت شوید");
+                return res.redirect("/basket")
+            }
+            const address = await Address.findOne({ user: user._id })
+            if (!address) {
+                req.flash("error", "لطفا برای پرداخت آدرس خود را از پنل کاربری وارد کنید");
+                return this.back(req, res);
+            }
+            //! Get a cookies
+            var cartItems = JSON.parse(req.cookies.cart__Molla);
+            // ! validation
+            if (cartItems.length === 0) {
+                req.flash("error", "حداقل یک محصول را در سبد خرید قرار دهید");
+                return this.back(req, res);
+            }
+            let totalCarts = 0;
+            let products = [];
+            cartItems.forEach(async i => {
+                var totalItemCarts = i.price * i.quantity;
+                totalCarts += totalItemCarts++;
+                await products.push({
+                    count: i.quantity,
+                    color: i.color,
+                    price: i.price,
+                    image: i.image,
+                    size: i.size,
+                    productId: i.productId
+                })
+            })
+            const cart = await Cart.create({
+                user: user._id,
+                products,
+                priceProduct: totalCarts + 30000,
+                codePayment: this.nanoId(6)
+            })
+            const response = await zarinpal.PaymentRequest({
+                Amount: totalCarts + 30000, // In Tomans
+                CallbackURL: `${process.env.url}/user/verifyPayment?q=${cart.codePayment}`,
+                Description: 'پرداخت به درگاه اینترنتی فروشگاه رابا',
+                Email: user.email,
+                Mobile: user.mobile
+            })
+            if (response.status === 100) {
+                res.redirect(response.url)
+            } else {
+                req.flash("error", "متاسفانه مشکلی از سمت درگاه پیش آمده است لطفا دوباره امتحان کنید");
+                return this.back(req, res);
+            }
+        } catch (err) {
+            console.log(err.message);
+            req.flash("error", "متاسفانه مشکلی از سمت سرور پیش آمده است لطفا دوباره امتحان کنید");
+            return this.back(req, res);
+        }
+    }
+
+    // ? desc ==> check out user
+    // ? path ==> auth/checkout
+    async verifyPayment(req, res) {
+        try {
+            // ! get query
+            const status = req.query.Status;
+            console.log(status)
+            if (status === "OK") {
+                const cart = await Cart.findOne({ codePayment: req.query.q });
+                cart.isSuccess = true;
+                await cart.save();
+                //! Clearing the cookie
+                res.clearCookie("cart___items");
+                // ! send message
+                req.flash("success_msg", "سفارش شما با موفقیت ثبت شد");
+                res.redirect("/cart");
+            } else {
+                req.flash("error", "متاسفانه عملیات پرداخت با شکست مواجه شد");
+                res.clearCookie("discount__Molla")
+                res.redirect("/cart")
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    // ? desc ==> check out user
+    // ? path ==> auth/checkout
+    async changeisActive(req, res) {
+        try {
+            // ! get query
+            const address = await Address.findOne({ _id: req.params.id });
+            if (address.isActive) {
+                address.isActive = false;
+                await address.save();
+                req.flash("success_msg", "آدرس فعال شد");
+                return this.back(req, res)
+            } else {
+                address.isActive = true;
+                await address.save();
+                req.flash("error", "آدرس غیر فعال شد");
+                return this.back(req, res)
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
 
 }
 module.exports = new userController();

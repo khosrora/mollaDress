@@ -1,0 +1,196 @@
+<main class="main">
+    <%- include("../../includes/bread") %>
+
+        <div class="page-content">
+            <div class="container">
+                <figure class="entry-media">
+                    <img src="/uploads/images/blogs/<%= blog.image %>" alt="توضیحات عکس" style="height: 60rem; object-fit: cover;">
+                </figure><!-- End .entry-media -->
+                <div class="row">
+                    <div class="col-lg-9">
+                        <article class="entry single-entry">
+                            <div class="entry-body">
+                                <div class="entry-meta">
+                                    <span class="entry-author">
+                                        نویسنده : <a href="#">
+                                            <%= blog.user.fullname %>
+                                        </a>
+                                    </span>
+                                    <span class="meta-separator">|</span>
+                                    <a href="#">
+                                        <%= jalaliMoment(blog.createdAt) %>
+                                    </a>
+                                    <span class="meta-separator">|</span>
+                                    <a href="#">2 دیدگاه</a>
+                                </div><!-- End .entry-meta -->
+
+                                <h1 class="entry-title entry-title-big">
+                                    <%= blog.title %>
+                                </h1><!-- End .entry-title -->
+
+
+
+                                <div class="entry-content editor-content">
+                                    <blockquote>
+                                        <p>
+                                            <%- truncate(blog.desc , 200) %>
+                                        </p>
+                                    </blockquote>
+                                    <p>
+                                        <%- blog.desc %>
+                                    </p>
+                                </div><!-- End .entry-content -->
+
+                                <div class="entry-footer row no-gutters flex-column flex-md-row">
+                                    <div class="col-md">
+                                        <div class="entry-tags">
+                                            <span>برچسب : </span> 
+                                            <% for (let item of blog.items) {%>
+                                                <a href="#"><%= item %></a>
+                                                <%}%>
+                                        </div><!-- End .entry-tags -->
+                                    </div><!-- End .col -->
+                                </div><!-- End .entry-footer row no-gutters -->
+                            </div><!-- End .entry-body -->
+                        </article><!-- End .entry -->
+
+
+                        <%- include("../includes/suggestBlog.ejs") %>
+
+                            <div class="comments">
+                                <h3 class="title">3 دیدگاه</h3><!-- End .title -->
+
+                                <ul>
+                                    <li>
+                                        <div class="comment">
+                                            <figure class="comment-media">
+                                                <a href="#">
+                                                    <img src="/assets/images/blog/comments/1.jpg" alt="User name">
+                                                </a>
+                                            </figure>
+
+                                            <div class="comment-body">
+                                                <a href="#" class="comment-reply">پاسخ</a>
+                                                <div class="comment-user">
+                                                    <h4><a href="#">کاربر 1</a></h4>
+                                                    <span class="comment-date">9 فروردین 1399 - 2:19 بعدازظهر</span>
+                                                </div> <!-- End .comment-user -->
+
+                                                <div class="comment-content">
+                                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم، لورم
+                                                        ایپسوم متن
+                                                        ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با
+                                                        تولید
+                                                        سادگی نامفهوم.
+                                                    </p>
+                                                </div><!-- End .comment-content -->
+                                            </div><!-- End .comment-body -->
+                                        </div><!-- End .comment -->
+
+                                        <ul>
+                                            <li>
+                                                <div class="comment">
+                                                    <figure class="comment-media">
+                                                        <a href="#">
+                                                            <img src="/assets/images/blog/comments/2.jpg"
+                                                                alt="User name">
+                                                        </a>
+                                                    </figure>
+
+                                                    <div class="comment-body">
+                                                        <a href="#" class="comment-reply">پاسخ</a>
+                                                        <div class="comment-user">
+                                                            <h4><a href="#">کاربر 2</a></h4>
+                                                            <span class="comment-date">9 فروردین 1399 - 2:19
+                                                                بعدازظهر</span>
+                                                        </div><!-- End .comment-user -->
+
+                                                        <div class="comment-content">
+                                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم.</p>
+                                                        </div><!-- End .comment-content -->
+                                                    </div><!-- End .comment-body -->
+                                                </div><!-- End .comment -->
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <div class="comment">
+                                            <figure class="comment-media">
+                                                <a href="#">
+                                                    <img src="/assets/images/blog/comments/3.jpg" alt="User name">
+                                                </a>
+                                            </figure>
+
+                                            <div class="comment-body">
+                                                <a href="#" class="comment-reply">پاسخ</a>
+                                                <div class="comment-user">
+                                                    <h4><a href="#">کاربر 3</a></h4>
+                                                    <span class="comment-date">9 فروردین 1399 - 2:19 بعدازظهر</span>
+                                                </div> <!-- End .comment-user -->
+
+                                                <div class="comment-content">
+                                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن
+                                                        ساختگی با تولید سادگی نامفهوم
+                                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم
+                                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن
+                                                        ساختگی با تولید سادگی نامفهوم
+                                                    </p>
+                                                </div><!-- End .comment-content -->
+                                            </div><!-- End .comment-body -->
+                                        </div><!-- End .comment -->
+                                    </li>
+                                </ul>
+                            </div><!-- End .comments -->
+                            <div class="reply">
+                                <div class="heading">
+                                    <h3 class="title">ارسال یک دیدگاه</h3><!-- End .title -->
+                                    <p class="title-desc">ایمیل شما منتشر نخواهد شد، فیلد های اجباری با علامت * مشخص
+                                        شده اند.</p>
+                                </div><!-- End .heading -->
+
+                                <form action="#">
+                                    <label for="reply-message" class="sr-only">دیدگاه</label>
+                                    <textarea name="reply-message" id="reply-message" cols="30" rows="4"
+                                        class="form-control" required placeholder="دیدگاه شما *"></textarea>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="reply-name" class="sr-only">نام</label>
+                                            <input type="text" class="form-control" id="reply-name" name="reply-name"
+                                                required placeholder="نام شما *">
+                                        </div><!-- End .col-md-6 -->
+
+                                        <div class="col-md-6">
+                                            <label for="reply-email" class="sr-only">ایمیل</label>
+                                            <input type="email" class="form-control" id="reply-email" name="reply-email"
+                                                required placeholder="ایمیل شما *">
+                                        </div><!-- End .col-md-6 -->
+                                    </div><!-- End .row -->
+
+                                    <button type="submit" class="btn btn-outline-primary-2 float-right">
+                                        <span>ارسال دیدگاه</span>
+                                        <i class="icon-long-arrow-left"></i>
+                                    </button>
+                                </form>
+                            </div><!-- End .reply -->
+                    </div><!-- End .col-lg-9 -->
+
+                    <aside class="col-lg-3">
+                        <div class="sidebar">
+                            <div class="widget widget-cats">
+                                <h3 class="widget-title">دسته بندی ها</h3><!-- End .widget-title -->
+                                <ul>
+                                    <li><a href="#">سبد زندگی</a></li>
+                                    <li><a href="#">خرید</a></li>
+                                    <li><a href="#">مد</a></li>
+                                    <li><a href="#">سفر</a></li>
+                                    <li><a href="#">سرگرمی</a></li>
+                                </ul>
+                            </div><!-- End .widget -->
+                        </div><!-- End .sidebar -->
+                    </aside><!-- End .col-lg-3 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .page-content -->
+</main><!-- End .main -->

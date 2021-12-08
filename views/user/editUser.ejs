@@ -1,0 +1,101 @@
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('/assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">داشبورد<span>فروشگاه</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <%- include("../includes/bread") %>
+
+        <%- include("../messages/error") %>
+            <%- include("../messages/message") %>
+
+                <div class="page-content">
+                    <div class="dashboard">
+                        <div class="container">
+                            <div class="row">
+
+                                <%- include("./includes/aside") %>
+
+                                    <div class="col-md-8 col-lg-9">
+                                        <form action="/user/editUser" method="post" id="editForm">
+                                            <div class="row my-5">
+                                                <div class="col-sm-6">
+                                                    <label>نام کاربری *</label>
+                                                    <input type="text" class="form-control" name="fullname"
+                                                        value="<%= user.fullname %>">
+                                                </div><!-- End .col-sm-6 -->
+
+                                                <div class="col-sm-6">
+                                                    <label>پست الکترونیک *</label>
+                                                    <input type="text" class="form-control" name="email"
+                                                        value="<%= user.email %>">
+                                                </div><!-- End .col-sm-6 -->
+                                            </div><!-- End .row -->
+                                            <div class="row my-5">
+                                                <div class="col-sm-6">
+                                                    <label>شماره تماس *</label>
+                                                    <input type="text" class="form-control" name="mobile"
+                                                        value="<%= user.mobile %>">
+                                                </div><!-- End .col-sm-6 -->
+                                            </div><!-- End .row -->
+
+                                            <button type="submit" class="btn btn-outline-primary-2 float-right">
+                                                <span>ویرایش</span>
+                                                <i class="icon-long-arrow-left"></i>
+                                            </button>
+                                        </form>
+                                    </div><!-- End .col-lg-9 -->
+
+                            </div><!-- End .row -->
+                        </div><!-- End .container -->
+                    </div><!-- End .dashboard -->
+                </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+
+
+<script>
+    jQuery.extend(jQuery.validator.messages, {
+        required: "وارد کردن این فیلد ضروری است",
+        email: "پست الکترونیک درست وارد نشده است",
+        number: "لطفا بصورت عدد وارد کنید",
+        maxlength: jQuery.validator.format("کلمه عبور خود را بیشتر از 30 کاراکتر انتخاب نکنید"),
+        minlength: jQuery.validator.format(".کلمه عبور خود را کمتر از 8 کاراکتر انتخاب نکنید"),
+    });
+
+    $(document).ready(function () {
+        $.validator.setDefaults({
+            highlight: function (element) {
+                $(element)
+                    .closest(".form-group")
+                    .addClass("has-error")
+            }
+        });
+
+        $.validator.addMethod(
+            "regex",
+            function (value, element, regexp) {
+                var re = new RegExp(regexp);
+                return this.optional(element) || re.test(value);
+            },
+            "شماره همراه را چک کنید"
+        );
+
+        $('#editForm').validate(
+            {
+                rules: {
+                    fullname: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    mobile: {
+                        required: true,
+                        regex: "09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}"
+                    }
+                }
+            });
+    });
+</script>

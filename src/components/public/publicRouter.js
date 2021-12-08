@@ -33,6 +33,21 @@ router.get("/changePass", Handle.isLogged, publicController.getChangePassPage);
 // ? path ==> /product/:slug
 router.get("/product/:slug", publicController.getProductSingle);
 
+// ? desc ==> get cart page
+// ? path ==> /cart
+router.get("/cart", publicController.getCardPage);
+
+// ? desc ==> get all products
+// ? path ==> /products
+router.get("/products", publicController.getAllProductsPage);
+
+// ? desc ==> single blog
+// ? path ==> /blog/:id
+router.get("/blog/:slug", publicController.getSingleBlogPage);
+
+// ? desc ==> single blog
+// ? path ==> /blog/:id
+router.get("/blogs", publicController.getBlogsPage);
 
 
 
