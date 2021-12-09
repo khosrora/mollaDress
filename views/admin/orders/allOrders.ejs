@@ -1,0 +1,141 @@
+<link href="/admin/css/dataTables.bootstrap.css" rel="stylesheet" />
+<style>
+    .DTTT {
+        display: none !important;
+    }
+</style>
+
+<!-- Main Container -->
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <%- include("../includes/aside.ejs") %>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <%- include("../../messages/message.ejs") %>
+                    <%- include("../../messages/error.ejs") %>
+                        <%- include("../includes/breadCrumb.ejs") %>
+                            <div class="page-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="widget">
+                                        <div class="widget-header ">
+                                            <span class="widget-caption">
+                                                <%= title %>
+                                            </span>
+                                            <div class="widget-buttons">
+                                                <a href="#" data-toggle="maximize">
+                                                    <i class="fa fa-expand"></i>
+                                                </a>
+                                                <a href="#" data-toggle="collapse">
+                                                    <i class="fa fa-minus"></i>
+                                                </a>
+                                                <a href="#" data-toggle="dispose">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="widget-body">
+                                            <table class="table table-striped table-hover table-bordered"
+                                                id="editabledatatable">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th>
+                                                            کد سفارش
+                                                        </th>
+                                                        <th>
+                                                            وضعیت پرداخت
+                                                        </th>
+                                                        <th>
+                                                            وضعیت ارسال
+                                                        </th>
+                                                        <th>
+                                                            مبلغ کل
+                                                        </th>
+                                                        <th>
+                                                            تاریخ
+                                                        </th>
+                                                        <th>
+                                                            سفارش دهنده
+                                                        </th>
+                                                        <th>
+
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <% for (let item of carts) {%>
+                                                        <tr>
+                                                            <td>
+                                                                <%= item.codePayment %>
+                                                            </td>
+                                                            <td>
+                                                                <% if(item.isSuccess) {%>
+                                                                    <span class="text-success">
+                                                                        پرداخت شد
+                                                                    </span>
+                                                                    <%}else {%>
+                                                                        <span class="text-danger">
+                                                                            پرداخت نشد
+                                                                        </span>
+                                                                        <%}%>
+                                                            </td>
+                                                            <td>
+                                                                <% if(item.status==="Unseen" ) {%>
+                                                                    <span class="text-danger">
+                                                                        چک نشده است
+                                                                    </span>
+                                                                    <%}else if (item.status==="Processing" ){%>
+                                                                        <span class="text-warning">
+                                                                            در حال پردازش
+                                                                        </span>
+                                                                        <%}else {%>
+                                                                            <span class="text-success">
+                                                                                ارسال شد
+                                                                            </span>
+                                                                            <%}%>
+                                                            </td>
+                                                            <td>
+                                                                <%= separate(item.priceProduct) %>
+                                                            </td>
+                                                            <td>
+                                                                <%= jalaliMoment(item.createdAt) %>
+                                                            </td>
+                                                            <td class="center ">
+                                                                <%= item.user.fullname %>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/admin/singleOrder/<%= item._id %>"
+                                                                    class="btn btn-secondary btn-xs "><i
+                                                                        class="fa fa-eye"></i> مشاهده</a>
+                                                            </td>
+                                                        </tr>
+                                                        <%}%>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            </div>
+            <!-- /Page Content -->
+            
+    </div>
+    <!-- /Page Container -->
+    <!-- Main Container -->
+
+</div>
+
+<script src="/admin/js/datatable/jquery.dataTables.min.js"></script>
+<script src="/admin/js/datatable/ZeroClipboard.js"></script>
+<script src="/admin/js/datatable/dataTables.tableTools.min.js"></script>
+<script src="/admin/js/datatable/dataTables.bootstrap.min.js"></script>
+<script src="/admin/js/datatable/datatables-init.js"></script>
+<script>
+    InitiateSimpleDataTable.init();
+    InitiateEditableDataTable.init();
+    InitiateExpandableDataTable.init();
+    InitiateSearchableDataTable.init();
+</script>

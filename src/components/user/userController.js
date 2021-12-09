@@ -12,6 +12,7 @@ const passport = require('passport');
 
 // * helper
 const controller = require('../../helper/controller');
+const { separate } = require('../../helper/seperate');
 
 // *error handler
 const { get500 } = require('../errorHandler');
@@ -447,6 +448,58 @@ class userController extends controller {
             console.log(err.message);
         }
     }
+
+    // ? desc ==> change address active
+    // ? path ==> user/myOrders
+    async getUserOrdersPage(req, res) {
+        try {
+            // ! get user
+            const categories = await Category.find();
+            const user = req.user;
+            const orders = await Cart.find({ user: user._id }).sort({ createdAt: -1 });
+            return res.render("user/myOrders.ejs", {
+                title: "ُسفارشات شما",
+                breadCrumb: "ُسفارشات شما",
+                error: req.flash("error"),
+                message: req.flash("success_msg"),
+                categories,
+                user,
+                orders,
+                separate
+            })
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+
+
+
+    // ? desc ==> change address active
+    // ? path ==> user/myOrders
+    async getUserOrderPage(req, res) {
+        try {
+            // ! get user
+            const categories = await Category.find();
+            const user = req.user;
+            const order = await Cart.findOne({ codePayment: req.params.code });
+
+            return res.render("user/myOrder.ejs", {
+                title: "ُجزئیات سفارش",
+                breadCrumb: "ُجزئیات سفارش",
+                error: req.flash("error"),
+                message: req.flash("success_msg"),
+                categories,
+                user,
+                order,
+                separate
+            })
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+
 
 }
 module.exports = new userController();

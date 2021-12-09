@@ -3,7 +3,7 @@
 const Category = require('../admin/categories/model/Category');
 const Attribute = require('../admin/products/model/Attribute');
 const Product = require('../admin/products/model/Product');
-const Address = require('../user/model/Address');
+const Brand = require('../admin/brands/model/Brand');
 const Blog = require('../admin/blogs/model/Blog');
 
 // *error handler
@@ -161,17 +161,44 @@ class publicController extends controller {
         try {
             // ! get items 
             const categories = await Category.find();
+            const brands = await Brand.find();
             const products = await Product.find();
             const suggests = await Product.find({ sort: -1 });
 
             return res.render("public/pages/products.ejs", {
-                title: `${blog.title}`,
-                breadCrumb: `مقالات`,
+                title: `محصولات`,
+                breadCrumb: `محصولات`,
                 categories,
                 separate,
                 truncate: this.truncate,
                 products,
-                suggests
+                suggests,
+                brands
+            })
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+
+    // ? desc ==> get category products
+    // ? path ==> /products/:name
+    async getCategoryProductsPage(req, res) {
+        try {
+            // ! get items 
+            const categories = await Category.find();
+            const brands = await Brand.find();
+            const products = await Product.find({ categories: req.params.name });
+            const suggests = await Product.find({ sort: -1 });
+            return res.render("public/pages/products.ejs", {
+                title: `محصولات`,
+                breadCrumb: `محصولات`,
+                categories,
+                separate,
+                truncate: this.truncate,
+                products,
+                suggests,
+                brands
             })
         } catch (err) {
             console.log(err.message);
@@ -230,7 +257,43 @@ class publicController extends controller {
         }
     }
 
+    // ? desc ==> aboutUs
+    // ? path ==> /aboutUs
+    async getAboutUs(req, res) {
+        // ! get items 
+        const categories = await Category.find();
 
+        try {
+            return res.render("public/pages/aboutUs.ejs", {
+                title: "درباره ما",
+                breadCrumb: "درباره ما",
+                message: req.flash("success_msg"),
+                categories,
+                jalaliMoment: this.jalaliMoment,
+            })
+        } catch (err) {
+            get500(req, res)
+        }
+    }
+
+    // ? desc ==> contactUs
+    // ? path ==> /contactUs
+    async getContactUs(req, res) {
+        // ! get items 
+        const categories = await Category.find();
+
+        try {
+            return res.render("public/pages/contactUs.ejs", {
+                title: "درباره ما",
+                breadCrumb: "درباره ما",
+                message: req.flash("success_msg"),
+                categories,
+                jalaliMoment: this.jalaliMoment,
+            })
+        } catch (err) {
+            get500(req, res)
+        }
+    }
 
 }
 module.exports = new publicController();

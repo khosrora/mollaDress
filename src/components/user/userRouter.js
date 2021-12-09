@@ -68,16 +68,24 @@ router.get("/editUser", userController.getEditUserPage);
 router.post("/editUser", userController.editUser);
 
 // ? desc ==> check out user
-// ? path ==> auth/checkout
+// ? path ==> user/checkout
 router.get("/payment", userController.payment);
 
 // ? desc ==> verify check out user
-// ? path ==> auth/verifyPayment
+// ? path ==> user/verifyPayment
 router.get("/verifyPayment", userController.verifyPayment);
 
 // ? desc ==> change address active
-// ? path ==> auth/changeisActive/:id
+// ? path ==> user/changeisActive/:id
 router.get("/changeisActive/:id", userController.changeisActive);
+
+// ? desc ==> change address active
+// ? path ==> user/myOrders
+router.get("/myOrders", userController.getUserOrdersPage);
+
+// ? desc ==> change address active
+// ? path ==> user/myOrder/:code
+router.get("/myOrder/:code", userController.getUserOrderPage);
 
 
 

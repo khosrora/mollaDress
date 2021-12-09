@@ -1,0 +1,80 @@
+<main class="main">
+    <!-- ! bread -->
+    <%- include("../includes/bread") %>
+        <!-- ! bread -->
+
+        <div class="page-content">
+            <div class="dashboard">
+                <div class="container">
+                    <div class="row">
+
+                        <!-- ! aside -->
+                        <%- include("./includes/aside") %>
+                            <!-- ! aside -->
+
+                            <div class="col-md-8 col-lg-9">
+
+                                <%- include("../messages/error") %>
+                                    <%- include("../messages/message") %>
+
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">کد پرداخت</th>
+                                                    <th scope="col">مبلغ پرداختی</th>
+                                                    <th scope="col">عملیات</th>
+                                                    <th scope="col">وضعیت</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for (item of orders){%>
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/user/myOrder/<%= item.codePayment %>">
+                                                                مشاهده
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <%= item.codePayment %>
+                                                        </td>
+                                                        <td>
+                                                            <%= separate(item.priceProduct) %>
+                                                        </td>
+                                                        <td>
+                                                            <% if(item.isSuccess) {%>
+                                                                <span class="text-success">
+                                                                    پرداخت شد
+                                                                </span>
+                                                                <%}else {%>
+                                                                    <span class="text-danger">
+                                                                        پرداخت نشد
+                                                                    </span>
+                                                                    <%}%>
+                                                        </td>
+                                                        <td>
+                                                            <% if(item.status==="Unseen" ) {%>
+                                                                <span class="text-danger">
+                                                                    چک نشده است
+                                                                </span>
+                                                                <%}else if (item.status==="Processing" ){%>
+                                                                    <span class="text-warning">
+                                                                        در حال پردازش
+                                                                    </span>
+                                                                    <%}else {%>
+                                                                        <span class="text-success">
+                                                                            ارسال شد
+                                                                        </span>
+                                                                        <%}%>
+                                                        </td>
+                                                    </tr>
+                                                    <%}%>
+                                            </tbody>
+                                        </table>
+
+                            </div><!-- End .col-lg-9 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .dashboard -->
+        </div><!-- End .page-content -->
+</main><!-- End .main -->

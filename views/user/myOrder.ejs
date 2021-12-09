@@ -1,0 +1,70 @@
+<main class="main">
+
+    <!-- ! bread -->
+    <%- include("../includes/bread") %>
+        <!-- ! bread -->
+
+
+        <div class="page-content">
+            <div class="dashboard">
+                <div class="container">
+                    <div class="row">
+                        <!-- ! aside -->
+                        <%- include("./includes/aside") %>
+                            <!-- ! aside -->
+
+                            <div class="col-md-8 col-lg-9">
+                                <%- include("../messages/error") %>
+                                    <%- include("../messages/message") %>
+
+
+                                        <table class="table table-cart table-mobile">
+                                            <thead>
+                                                <tr>
+                                                    <th>محصول</th>
+                                                    <th>رنگ</th>
+                                                    <th>تعداد</th>
+                                                    <th>قیمت</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <% for (let item of order.products) {%>
+                                                    <tr>
+                                                        <td class="product-col">
+                                                            <div class="product">
+                                                                <figure class="product-media">
+                                                                    <a href="#">
+                                                                        <img src="/uploads/images/products/<%= item.image %>"
+                                                                            alt="تصویر محصول">
+                                                                    </a>
+                                                                </figure>
+                                                            </div><!-- End .product -->
+                                                        </td>
+                                                        <td class="quantity-col">
+                                                            <div class="cart-product-quantity">
+                                                                <div class=""
+                                                                    style="background-color: <%= item.color %>; width: 3rem; height: 3rem;">
+                                                                </div>
+                                                            </div><!-- End .cart-product-quantity -->
+                                                        </td>
+                                                        <td class="quantity-col">
+                                                            <div class="cart-product-quantity">
+                                                                <%= item.count %>
+                                                            </div><!-- End .cart-product-quantity -->
+                                                        </td>
+                                                        <td class="total-col">
+                                                            <%= separate(item.price) %>
+                                                        </td>
+                                                    </tr>
+                                                    <%}%>
+                                            </tbody>
+                                        </table><!-- End .table table-wishlist -->
+
+
+                            </div><!-- End .col-lg-9 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .dashboard -->
+        </div><!-- End .page-content -->
+</main><!-- End .main -->

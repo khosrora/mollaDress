@@ -41,6 +41,10 @@ router.get("/cart", publicController.getCardPage);
 // ? path ==> /products
 router.get("/products", publicController.getAllProductsPage);
 
+// ? desc ==> get category products
+// ? path ==> /products/:name
+router.get("/products/:name", publicController.getCategoryProductsPage);
+
 // ? desc ==> single blog
 // ? path ==> /blog/:id
 router.get("/blog/:slug", publicController.getSingleBlogPage);
@@ -48,6 +52,14 @@ router.get("/blog/:slug", publicController.getSingleBlogPage);
 // ? desc ==> single blog
 // ? path ==> /blog/:id
 router.get("/blogs", publicController.getBlogsPage);
+
+// ? desc ==> aboutUs
+// ? path ==> /aboutUs
+router.get("/aboutUs", publicController.getAboutUs);
+
+// ? desc ==> contactUs
+// ? path ==> /contactUs
+router.get("/contactUs", publicController.getContactUs);
 
 
 

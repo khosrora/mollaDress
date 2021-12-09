@@ -144,6 +144,7 @@
 
                                     <ul>
                                         <li><a href="/products">محصولات</a></li>
+                                        <li><a href="/products">مقالات و اخبار</a></li>
                                         <li><a href="/aboutUs">درباره ما</a></li>
                                         <li><a href="/contactUs">تماس با ما</a></li>
                                     </ul>
@@ -160,7 +161,7 @@
                                                     <ul>
                                                         <% for (i of categories) {%>
                                                             <% if (i.category===null) {%>
-                                                                <li><a href="product.html">
+                                                                <li><a href="/products/<%= i.name %>">
                                                                         <%= i.name %>
                                                                     </a></li>
                                                                 <%}%>
@@ -172,7 +173,7 @@
                                             <div class="col-md-6">
                                                 <div class="banner banner-overlay">
                                                     <a href="category.html">
-                                                        <img src="assets/images/menu/banner-2.jpg" alt="Banner">
+                                                        <img src="/assets/images/menu/banner-2.jpg" alt="Banner">
 
                                                         <div class="banner-content banner-content-bottom">
                                                             <div class="banner-title text-white">محصولات
@@ -365,8 +366,10 @@
                     <li>
                         <a href="#">صفحات</a>
                         <ul>
-                            <li><a href="/faq">سوالات متداول</a></li>
                             <li><a href="/products">محصولات</a></li>
+                            <li><a href="/blog">مقالات و اخبار</a></li>
+                            <li><a href="/contactus">تماس با ما</a></li>
+                            <li><a href="/aboutus">درباره ما</a></li>
                         </ul>
                     </li>
                     <li>

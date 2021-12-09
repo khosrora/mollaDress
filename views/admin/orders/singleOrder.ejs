@@ -1,0 +1,124 @@
+<%- include("../includes/aside.ejs") %>
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="page-container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">
+                        <%- include("../../messages/error.ejs") %>
+                            <%- include("../../messages/message.ejs") %>
+                                <%- include("../includes/breadCrumb.ejs") %>
+                                    <form action="/admin/changeStatus/<%= order._id %>" method="post">
+                                        <div class="well with-header">
+                                            <div class="header bordered-palegreen">وضعیت محصول</div>
+                                            <div>
+                                                <select id="e1" style="width:100%;" onchange="this.form.submit()"
+                                                    name="status">
+                                                    <option value="">از اینجا وضعیت را انتخاب کنید</option>
+                                                    <option value="Unseen">دیده نشده</option>
+                                                    <option value="Processing">در حال پردازش</option>
+                                                    <option value="Posted">ارسال شد</option>
+                                                </select>
+                                            </div>
+                                            <div class="">
+                                                <% if(order.status==="Unseen" ) {%>
+                                                    <span class="text-danger">
+                                                        <p class="text-danger">این محصول در حال حاضر دیده نشده
+                                                            است</p>
+                                                    </span>
+                                                    <%}else if (order.status==="Processing" ){%>
+                                                        <p class="text-danger">این محصول در حال پردازش
+                                                            است</p>
+                                                        <%}else {%>
+                                                            <p class="text-danger">این محصول ارسال شده است</p>
+                                                            <%}%>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <table class="table table-cart table-mobile ">
+                                        <thead>
+                                            <tr>
+                                                <th>محصول</th>
+                                                <th>رنگ</th>
+                                                <th>تعداد</th>
+                                                <th>قیمت</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <% for (let item of order.products) {%>
+                                                <tr>
+                                                    <td class="product-col">
+                                                        <div class="product">
+                                                            <figure class="product-media">
+                                                                <a href="#">
+                                                                    <img src="/uploads/images/products/<%= item.image %>"
+                                                                        alt="تصویر محصول" width="150" height="150">
+                                                                </a>
+                                                            </figure>
+                                                        </div><!-- End .product -->
+                                                    </td>
+                                                    <td class="quantity-col">
+                                                        <div class="cart-product-quantity"
+                                                            style="background-color: <%= item.color %>; width: 5rem; height : 5rem">
+
+                                                        </div><!-- End .cart-product-quantity -->
+                                                    </td>
+                                                    <td class="quantity-col">
+                                                        <div class="cart-product-quantity">
+                                                            <%= item.count %>
+                                                        </div><!-- End .cart-product-quantity -->
+                                                    </td>
+                                                    <td class="total-col">
+                                                        <%= separate(item.price) %>
+                                                    </td>
+                                                </tr>
+                                                <%}%>
+                                        </tbody>
+                                    </table><!-- End .table table-wishlist -->
+
+                                    <!-- !addreess -->
+                                    <div class=" col-xs-12">
+                                        <div class="widget">
+                                            <div class="widget-header bg-palegreen">
+                                                <i class="widget-icon fa fa-arrow-down"></i>
+                                                <span class="widget-caption">آدرس فعال کاربر</span>
+                                                <div class="widget-buttons">
+                                                    <a href="#" data-toggle="maximize">
+                                                        <i class="fa fa-expand"></i>
+                                                    </a>
+                                                    <a href="#" data-toggle="collapse">
+                                                        <i class="fa fa-minus"></i>
+                                                    </a>
+                                                    <a href="#" data-toggle="dispose">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </div>
+                                                <!--Widget Buttons-->
+                                            </div>
+                                            <!--Widget Header-->
+                                            <div class="widget-body">
+                                                <% for (let i of addresses) {%>
+                                                    <p>استان : <%= i.state %>
+                                                    </p><br>
+                                                    <p>شهر : <%= i.city %>
+                                                    </p><br>
+                                                    <p>کد پستی : <%= i.postalCode %>
+                                                    </p><br>
+                                                    <p>دریافت کننده : <%= i.reciver %>
+                                                    </p><br>
+                                                    <p>آدرس : <%= i.address %>
+                                                    </p><br>
+                                                    <hr>
+                                                    <%}%>
+                                            </div>
+                                            <!--Widget Body-->
+                                        </div>
+                                        <!--Widget-->
+                                    </div>
+                                    <!-- !addreess -->
+                    </div><!-- End .col-lg-9 -->
+                </div><!-- End .row -->
+
+            </div><!-- End .container -->
+        </div><!-- End .dashboard -->
+    </div><!-- End .page-content -->
