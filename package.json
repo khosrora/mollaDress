@@ -26,6 +26,7 @@
     "express-session": "^1.17.2",
     "jalali-moment": "^3.3.10",
     "jsonwebtoken": "^8.5.1",
+    "minifig": "^1.4.1",
     "mongoose": "^6.0.13",
     "multer": "^1.4.3",
     "nanoid": "^3.1.30",

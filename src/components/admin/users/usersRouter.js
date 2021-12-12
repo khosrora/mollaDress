@@ -37,5 +37,21 @@ router.get("/changeAdmin/:id", usersController.changeIsAdmin);
 // ? path ==> /changeRole/:id
 router.post("/changeRole/:id", usersController.changeRole);
 
+// ? desc ==> get contact us
+// ? path ==> /contactUs
+router.get("/contactUs", usersController.getContactUsPage);
+
+// ? desc ==> isShow contact us
+// ? path ==> /isShow/:id
+router.get("/isShow/:id", usersController.isShowContactUs);
+
+// ? desc ==> get all comments
+// ? path ==> /comments
+router.get("/comments", usersController.getAllComments);
+
+// ? desc ==> delete comment
+// ? path ==> /deleteComment/:id
+router.get("/deleteComment/:id", usersController.deleteComment);
+
 
 module.exports = router;

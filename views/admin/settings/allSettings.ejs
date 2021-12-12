@@ -1,0 +1,118 @@
+<link href="/admin/css/dataTables.bootstrap.css" rel="stylesheet" />
+<style>
+    .DTTT {
+        display: none !important;
+    }
+</style>
+
+<!-- Main Container -->
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <%- include("../includes/aside.ejs") %>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <%- include("../../messages/message.ejs") %>
+                    <%- include("../../messages/error.ejs") %>
+                        <%- include("../includes/breadCrumb.ejs") %>
+                            <div class="page-body">
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="widget">
+                                        <div class="widget-header ">
+                                            <span class="widget-caption">تنظیمات</span>
+                                            <div class="widget-buttons">
+                                                <a href="#" data-toggle="maximize">
+                                                    <i class="fa fa-expand"></i>
+                                                </a>
+                                                <a href="#" data-toggle="collapse">
+                                                    <i class="fa fa-minus"></i>
+                                                </a>
+                                                <a href="#" data-toggle="dispose">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="table-toolbar">
+                                                <a href="/admin/createSetting" class="btn btn-default">
+                                                    ساخت تنظیمات جدید
+                                                </a>
+                                            </div>
+                                            <table class="table table-striped table-hover table-bordered"
+                                                id="editabledatatable">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th>
+                                                            نام
+                                                        </th>
+                                                        <th>
+                                                            سازنده
+                                                        </th>
+                                                        <th>
+                                                            تاریخ
+                                                        </th>
+                                                        <th>
+                                                        </th>
+                                                        <th>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+                                                    <% for (let item of settings) {%>
+                                                        <tr>
+                                                            <td>
+                                                                <%= item.name %>
+                                                            </td>
+                                                            <td>
+                                                                <%= item.user.fullname %>
+                                                            </td>
+                                                            <td>
+                                                                <%= jalaliMoment(item.createdAt) %>
+                                                            </td>
+                                                            <td>
+                                                                <% if (item.isActive){%>
+                                                                    <a href="/admin/changeisActive?id=<%= item._id %>"
+                                                                        class="btn btn-success btn-xs "><i
+                                                                            class="fa fa-eye"></i>فعال</a>
+                                                                    <%}else {%>
+                                                                        <a href="/admin/changeisActive?id=<%= item._id %>"
+                                                                            class="btn btn-danger btn-xs "><i
+                                                                                class="fa fa-eye"></i>غیر فعال</a>
+                                                                        <%}%>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/admin/deleteSetting/<%= item._id %>"
+                                                                    class="btn btn-danger btn-xs "><i
+                                                                        class="fa fa-eye"></i> حذف</a>
+                                                            </td>
+                                                        </tr>
+                                                        <%}%>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            </div>
+            <!-- /Page Content -->
+    </div>
+    <!-- /Page Container -->
+    <!-- Main Container -->
+
+</div>
+
+
+<script src="/admin/js/datatable/jquery.dataTables.min.js"></script>
+<script src="/admin/js/datatable/ZeroClipboard.js"></script>
+<script src="/admin/js/datatable/dataTables.tableTools.min.js"></script>
+<script src="/admin/js/datatable/dataTables.bootstrap.min.js"></script>
+<script src="/admin/js/datatable/datatables-init.js"></script>
+<script>
+    InitiateSimpleDataTable.init();
+    InitiateEditableDataTable.init();
+    InitiateExpandableDataTable.init();
+    InitiateSearchableDataTable.init();
+</script>

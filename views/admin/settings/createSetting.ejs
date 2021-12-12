@@ -1,0 +1,105 @@
+<!-- Main Container -->
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <%- include("../includes/aside.ejs") %>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <%- include("../../messages/error.ejs") %>
+                    <%- include("../includes/breadCrumb.ejs") %>
+                        <div class="page-body">
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="widget">
+                                        <div class="widget-header bordered-bottom bordered-blue">
+                                            <span class="widget-caption">ساخت تنظیمات جدید</span>
+                                            <p class="text-danger">وارد کردن تمام اطلاعات ضروری نیست اما در صورت وارد
+                                                نکردن بعضی از صفحات متنی ندارند</p>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div>
+                                                <form role="form" action="/admin/createSetting" method="post">
+                                                    <div class="form-group">
+                                                        <label for="name">نام</label>
+                                                        <input type="" class="form-control" id="name"
+                                                            placeholder="نام تنظیمات را وارد کنید" name="name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="phoneNumber">شماره تماس</label>
+                                                        <input type="" class="form-control" id="phoneNumber"
+                                                            placeholder="شماره تماس را وارد کنید" name="phoneNumber"
+                                                            value="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="phoneNumber2">شماره تماس</label>
+                                                        <input type="" class="form-control" id="phoneNumber2"
+                                                            placeholder="شماره تماس را وارد کنید" name="phoneNumber2"
+                                                            value="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="address">آدرس</label>
+                                                        <input type="" class="form-control" id="address"
+                                                            placeholder="آدرس را وارد کنید" name="address" value="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="address2">آدرس</label>
+                                                        <input type="" class="form-control" id="address2"
+                                                            placeholder="آدرس را وارد کنید" name="address2" value="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="googleaddress">آدرس گوگل</label>
+                                                        <input type="" class="form-control" id="googleaddress"
+                                                            placeholder="کد دریافتی را وارد کنید" name="googleaddress"
+                                                            value="">
+                                                        <a href="https://www.google.com/maps" target="_blank"
+                                                            class="text-danger">از این
+                                                            آدرس کد را دریافت کنید</a>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="text">متن صفحات</label>
+                                                        <input type="" class="form-control" id="text"
+                                                            placeholder="متنی برای نمایش در وب سایت را وارد کنید"
+                                                            name="text" value="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="text2">متن صفحات</label>
+                                                        <input type="" class="form-control" id="text2"
+                                                            placeholder="متنی برای نمایش در وب سایت را وارد کنید"
+                                                            name="text2" value="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email">پست الکترونیک</label>
+                                                        <input type="" class="form-control" id="email"
+                                                            placeholder="پست الکترونیک  را وارد کنید" name="email"
+                                                            value="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email2">پست الکترونیک</label>
+                                                        <input type="" class="form-control" id="email2"
+                                                            placeholder="پست الکترونیک  را وارد کنید" name="email2"
+                                                            value="">
+                                                    </div>
+
+                                            </div>
+                                            <button type="submit" class="btn btn-blue">ایجاد تنظیمات
+                                            </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            <!-- /Page Content -->
+    </div>
+    <!-- /Page Container -->
+    <!-- Main Container -->
+
+</div>
+
+<script src="/admin/js/editors/summernote/summernote.js"></script>
+<script>
+    $('#summernote').summernote({ height: 300 });
+</script>

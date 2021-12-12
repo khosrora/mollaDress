@@ -69,6 +69,45 @@ gate.use('show-users', function (req) {
     }
 })
 
+gate.use('show-blog', function (req) {
+    switch (req.user.role) {
+        case "Manager":
+            return true;
+        case "Seller":
+            return false;
+        case "Assistant":
+            return true;
+        case "Client":
+            return false;
+    }
+})
+
+gate.use('show-order', function (req) {
+    switch (req.user.role) {
+        case "Manager":
+            return true;
+        case "Seller":
+            return true;
+        case "Assistant":
+            return false;
+        case "Client":
+            return false;
+    }
+})
+
+gate.use('show-setting', function (req) {
+    switch (req.user.role) {
+        case "Manager":
+            return true;
+        case "Seller":
+            return false;
+        case "Assistant":
+            return true;
+        case "Client":
+            return false;
+    }
+})
+
 
 
 module.exports = gate;

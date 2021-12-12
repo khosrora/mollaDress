@@ -61,8 +61,13 @@ router.get("/aboutUs", publicController.getAboutUs);
 // ? path ==> /contactUs
 router.get("/contactUs", publicController.getContactUs);
 
+// ? desc ==> send  contactUs form 
+// ? path ==> /contactUs
+router.post("/contactUs", publicController.ContactUs);
 
-
+// ? desc ==> create comment
+// ? path ==> auth/comment
+router.post("/comment", publicController.comment)
 
 
 module.exports = router;

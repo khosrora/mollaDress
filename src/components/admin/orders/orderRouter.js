@@ -16,31 +16,31 @@ router.use((req, res, next) => {
 
 // ? desc ==> get all orders
 // ? path ==> /admin/allOrders
-router.get("/allOrders", handle.isAdmin, orderController.getAllOrders);
+router.get("/allOrders", handle.isAdmin, gate.can("show-order"), orderController.getAllOrders);
 
 // ? desc ==> get  single Order
 // ? path ==> /admin/singleOrder/:id
-router.get("/singleOrder/:id", handle.isAdmin, orderController.getSingleOrderPage);
+router.get("/singleOrder/:id", handle.isAdmin, gate.can("show-order"), orderController.getSingleOrderPage);
 
 // ? desc ==> get all noPayments
 // ? path ==> /admin/noPayment
-router.get("/noPayment", handle.isAdmin, orderController.noPayment);
+router.get("/noPayment", handle.isAdmin, gate.can("show-order"), orderController.noPayment);
 
 // ? desc ==> get all processingOrder
 // ? path ==> /admin/processingOrder
-router.get("/processingOrder", handle.isAdmin, orderController.processingOrder);
+router.get("/processingOrder", handle.isAdmin, gate.can("show-order"), orderController.processingOrder);
 
 // ? desc ==> get all SendOrders
 // ? path ==> /admin/SendOrder
-router.get("/SendOrder", handle.isAdmin, orderController.SendOrder);
+router.get("/SendOrder", handle.isAdmin, gate.can("show-order"), orderController.SendOrder);
 
 // ? desc ==> get all unSeenOrder
 // ? path ==> /admin/unSeenOrder
-router.get("/unSeenOrder", handle.isAdmin, orderController.unSeenOrder);
+router.get("/unSeenOrder", handle.isAdmin, gate.can("show-order"), orderController.unSeenOrder);
 
 // ? desc ==> get all unSeenOrder
 // ? path ==> /admin/unSeenOrder
-router.post("/changeStatus/:id", handle.isAdmin, orderController.changeStatus);
+router.post("/changeStatus/:id", handle.isAdmin, gate.can("show-order"), orderController.changeStatus);
 
 
 

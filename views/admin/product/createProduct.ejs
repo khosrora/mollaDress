@@ -38,10 +38,12 @@
                                                                 <h6>دسته بندی محصول</h6>
                                                                 <select style="width: 100%;" name="categories">
                                                                     <% for (let item of categories) {%>
-                                                                        <option value="<%= item.name %>">
-                                                                            <%= item.name %>
-                                                                        </option>
-                                                                        <%}%>
+                                                                        <% if (item.category===null) {%>
+                                                                            <option value="<%= item.name %>">
+                                                                                <%= item.name %>
+                                                                            </option>
+                                                                            <%}%>
+                                                                                <%}%>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -54,6 +56,20 @@
                                                                             <%= item.name %>
                                                                         </option>
                                                                         <%}%>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-6">
+                                                            <div class="form-group">
+                                                                <h6>نوع محصول</h6>
+                                                                <select style="width: 100%;" name="item">
+                                                                    <% for (let item of categories) {%>
+                                                                        <% if(item.category !==null ) {%>
+                                                                            <option value="<%= item.name %>">
+                                                                                <%= item.name %>
+                                                                            </option>
+                                                                            <%}%>
+                                                                                <%}%>
                                                                 </select>
                                                             </div>
                                                         </div>

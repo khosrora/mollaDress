@@ -18,27 +18,27 @@ router.use((req, res, next) => {
 
 // ? dec ==> get create blog page
 // ? path ==> /admin/createBlog
-router.get("/createBlog", blogsController.getCreateBlog);
+router.get("/createBlog", gate.can("show-blog"), blogsController.getCreateBlog);
 
 // ? dec ==> get create blog page
 // ? path ==> /admin/createBlog
-router.post("/createBlog", upload.single('image'), blogsController.createBlog);
+router.post("/createBlog", gate.can("show-blog"), upload.single('image'), blogsController.createBlog);
 
 // ? dec ==> get All Blogs
 // ? path ==> /admin/getAllBlogs
-router.get("/getAllBlogs", blogsController.getAllBlogs);
+router.get("/getAllBlogs", gate.can("show-blog"), blogsController.getAllBlogs);
 
 // ? dec ==> blogDelete
 // ? path ==> /admin/blogDelete/:id
-router.get("/blogDelete/:id", blogsController.blogDelete);
+router.get("/blogDelete/:id", gate.can("show-blog"), blogsController.blogDelete);
 
 // ? dec ==> edit Delete
 // ? path ==> /admin/blogDelete/:id
-router.get("/editBlog/:id", blogsController.getEditBlogPage);
+router.get("/editBlog/:id", gate.can("show-blog"), blogsController.getEditBlogPage);
 
 // ? dec ==> edit Delete
 // ? path ==> /admin/blogDelete/:id
-router.post("/editBlog", blogsController.editBlog);
+router.post("/editBlog", gate.can("show-blog"), blogsController.editBlog);
 
 
 module.exports = router;

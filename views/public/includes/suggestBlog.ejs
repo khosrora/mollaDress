@@ -22,21 +22,21 @@
         <% for (let i of suggests) {%>
             <article class="entry entry-grid">
                 <figure class="entry-media">
-                    <a href="single.html">
+                    <a href="/blog/<%= i.slug %>">
                         <img src="/uploads/images/blogs/<%= i.image %>" alt="<%= i.title %>"
                             style="height: 40rem; object-fit: cover;">
                     </a>
                 </figure><!-- End .entry-media -->
 
-                <div class="entry-body">
+                <div class="/blog/<%= i.slug %>">
                     <div class="entry-meta justify-content-start">
-                        <a href="#">
+                        <a href="/blog/<%= i.slug %>">
                             <%= jalaliMoment(i.createdAt) %>
                         </a>
                     </div><!-- End .entry-meta -->
 
-                    <h2 class="entry-title">
-                        <a href="single.html">
+                    <h2 class="entry-title text-right">
+                        <a href="/blog/<%= i.slug %>">
                             <%= i.title %>
                         </a>
                     </h2><!-- End .entry-title -->

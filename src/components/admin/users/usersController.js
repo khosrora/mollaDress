@@ -1,5 +1,7 @@
 // * Model
 const User = require('../../user/model/User');
+const ContactUs = require('../../user/model/ContactUs');
+const Comment = require('../../user/model/Comment');
 
 // *error handler
 const { get500 } = require('../../errorHandler');
@@ -109,6 +111,85 @@ class usersController extends controller {
             await user.save();
             req.flash("success_msg", "نقش کاربر با موفقیت تغییر یافت");
             return res.redirect("/admin/users")
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+
+    // ? desc ==> get contact us
+    // ? path ==> /contactUs
+    async getContactUsPage(req, res) {
+        try {
+            // ! get items
+            const messages = await ContactUs.find().sort({ createdAt: -1 });
+            return res.render("admin/users/allContactUs.ejs", {
+                title: `پیام های دریافتی`,
+                breadCrumb: `پیام های دریافتی`,
+                error: req.flash("error"),
+                message: req.flash("success_msg"),
+                jalaliMoment: this.jalaliMoment,
+                messages,
+                ContactUs
+            })
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+
+    // ? desc ==> get contact us
+    // ? path ==> /contactUs
+    async isShowContactUs(req, res) {
+        try {
+            // ! get items
+            const message = await ContactUs.findOne({ _id: req.params.id });
+            if (message.isShow) {
+                message.isShow = false;
+                await message.save();
+                req.flash("error", "پیام در صفحه اول نمایش داده نمیشود");
+                return this.back(req, res);
+            } else {
+                message.isShow = true;
+                await message.save();
+                req.flash("success_msg", "پیام در صفحه اول نمایش داده میشود");
+                return this.back(req, res);
+            }
+
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+
+    // ? desc ==> get all comments
+    // ? path ==> /comments
+    async getAllComments(req, res) {
+        try {
+            // ! get items
+            const comments = await Comment.find().sort({ createdAt: -1 });
+            return res.render("admin/users/allComments.ejs", {
+                title: `نظرات ارسال شده`,
+                breadCrumb: `نظرات ارسال شده`,
+                error: req.flash("error"),
+                message: req.flash("success_msg"),
+                jalaliMoment: this.jalaliMoment,
+                comments
+            })
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res)
+        }
+    }
+
+    // ? desc ==> get all comments
+    // ? path ==> /comments
+    async deleteComment(req, res) {
+        try {
+            await Comment.findByIdAndRemove({ _id: req.params.id });
+
+            req.flash("error", "نظر با موفقیت حذف شد");
+            return this.back(req, res)
         } catch (err) {
             console.log(err.message);
             get500(req, res)

@@ -121,7 +121,7 @@
                             <a href="/cart" class="dropdown-toggle">
                                 <i class="icon-shopping-cart"></i>
                                 <span class="cart-count">0</span>
-                                <span class="cart-txt font-weight-semibold">164,000 تومان</span>
+                                <span class="cart-txt font-weight-semibold total___price">مشاهده سبد خرید</span>
                             </a>
                             <!--End .dropdown-toggle-->
                         </div><!-- End .cart-dropdown -->
@@ -200,7 +200,8 @@
                                                         <% for (items of categories) {%>
                                                             <% if(items.category !==null &&
                                                                 items.category==category.id){%>
-                                                                <li><a href="blog-grid-2cols.html">
+                                                                <li><a
+                                                                        href="/products/<%= items.name %>/<%= category.name %>">
                                                                         <%= items.name %>
                                                                     </a></li>
                                                                 <%}%>
@@ -223,7 +224,7 @@
 
                     <div class="header-right">
                         <i class="icon-medapps"></i>
-                        <p class="font-weight-semibold text-secondary">خرید تا 30 درصد تخفیف</p>
+                        <p class="font-weight-semibold text-secondary">مطمئن خرید کن</p>
                     </div>
                     <!--End .header-right-->
                 </div><!-- End .container -->
@@ -238,7 +239,7 @@
                         <div class="row">
                             <div class="col-md-12 col-xl-2-5col">
                                 <div class="widget widget-about">
-                                    <img src="assets/images/demos/demo-29/logo-2.png" class="footer-logo"
+                                    <img src="/assets/images/demos/demo-29/logo-2.png" class="footer-logo"
                                         alt="Footer Logo" width="82" height="22">
                                     <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم، لورم ایپسوم متن ساختگی با تولید
                                         سادگی
@@ -250,14 +251,6 @@
                                             <span class="widget-about-title">سوالی دارید؟ 7روز هفته/24ساعته</span>
                                             <a href="tel:123456789">02155667788</a>
                                         </div><!-- End .phoneNum-->
-
-                                        <div class="payment">
-                                            <span class="widget-about-title">روش های پرداخت</span>
-                                            <figure class="footer-payments">
-                                                <img src="assets/images/payments.png" alt="Payment methods" width="272"
-                                                    height="20">
-                                            </figure><!-- End .footer-payments -->
-                                        </div><!-- End .payment-->
                                     </div><!-- End .widget-about-info -->
                                 </div><!-- End .widget about-widget -->
                             </div><!-- End .col-md-12 col-xl-2-5col-->
@@ -266,29 +259,13 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="widget">
-                                            <h4 class="widget-title text-white">اطلاعات</h4><!-- End .widget-title -->
+                                            <h4 class="widget-title text-white">صفحات</h4><!-- End .widget-title -->
 
                                             <ul class="widget-list">
-                                                <li><a href="about.html">درباره ما</a></li>
-                                                <li><a href="#">خدمات</a></li>
-                                                <li><a href="#">نحوه خرید</a></li>
-                                                <li><a href="faq.html">سوالات متداول</a></li>
-                                                <li><a href="contact.html">تماس با ما</a></li>
-                                            </ul><!-- End .widget-list -->
-                                        </div><!-- End .widget -->
-                                    </div><!-- End .col-md-4 -->
-
-                                    <div class="col-md-4">
-                                        <div class="widget">
-                                            <h4 class="widget-title text-white">خدمات مشتری</h4>
-                                            <!-- End .widget-title -->
-
-                                            <ul class="widget-list">
-                                                <li><a href="#">شیوه پرداخت</a></li>
-                                                <li><a href="#">گارانتی بازگشت وجه</a></li>
-                                                <li><a href="#">شیوه ارسال محصولات</a></li>
-                                                <li><a href="#">قوانین و مقررات</a></li>
-                                                <li><a href="#">خط مشی</a></li>
+                                                <li><a href="/products">محصولات</a></li>
+                                                <li><a href="/blogs">اخبار و مقالات</a></li>
+                                                <li><a href="/aboutus">درباره ما</a></li>
+                                                <li><a href="/contactus">تماس با ما</a></li>
                                             </ul><!-- End .widget-list -->
                                         </div><!-- End .widget -->
                                     </div><!-- End .col-md-4 -->
@@ -299,10 +276,30 @@
                                             <!-- End .widget-title -->
 
                                             <ul class="widget-list">
-                                                <li><a href="/login">ورود</a></li>
-                                                <li><a href="cart.html">سبد خرید</a></li>
-                                                <li><a href="#">پیگیری سفارشات</a></li>
-                                                <li><a href="#">راهنما</a></li>
+                                                <li>
+                                                    <% if (auth.check) {%>
+                                                        <ul>
+                                                            <% if (auth.user.isAdmin !=="Admin" ) { %>
+                                                                <li class="login"><a href="/user/dashboard">پنل
+                                                                        کاربری</a></li>
+                                                                <li class="login"><a href="/user/logout">خروج</a>
+                                                                </li>
+                                                                <%}else {%>
+                                                                    <li class="login"><a href="/admin/dashboard">پنل
+                                                                            مدیریت</a></li>
+                                                                    <li class="login"><a href="/user/logout">خروج</a>
+                                                                    </li>
+                                                                    <%}%>
+                                                        </ul>
+                                                        <%}else {%>
+                                                            <ul>
+                                                                <li class="login"><a href="/login">ورود</a></li>
+                                                                <li class="login"><a href="/register">ثبت نام</a>
+                                                                </li>
+                                                            </ul>
+                                                            <%}%>
+                                                </li>
+                                                <li><a href="/cart">سبد خرید</a></li>
                                             </ul><!-- End .widget-list -->
                                         </div><!-- End .widget -->
                                     </div><!-- End .col-md-4 -->
@@ -323,20 +320,6 @@
                             <li><a href="#">قوانین و مقررات</a></li>
                             <li><a href="#">سیاست حریم خصوصی</a></li>
                         </ul><!-- End .footer-menu -->
-
-                        <div class="social-icons social-icons-color">
-                            <span class="social-label">شبکه های اجتماعی</span>
-                            <a href="#" class="social-icon social-facebook" title="فیسبوک" target="_blank"><i
-                                    class="icon-facebook-f"></i></a>
-                            <a href="#" class="social-icon social-twitter" title="توییتر" target="_blank"><i
-                                    class="icon-twitter"></i></a>
-                            <a href="#" class="social-icon social-instagram" title="اینستاگرام" target="_blank"><i
-                                    class="icon-instagram"></i></a>
-                            <a href="#" class="social-icon social-youtube" title="Youtube" target="_blank"><i
-                                    class="icon-youtube"></i></a>
-                            <a href="#" class="social-icon social-pinterest" title="پینترست" target="_blank"><i
-                                    class="icon-pinterest"></i></a>
-                        </div><!-- End .soial-icons -->
                     </div><!-- End .container -->
                 </div><!-- End .footer-bottom -->
 

@@ -7,5 +7,6 @@ exports.productValidation = yup.object().shape({
     desc: yup.string().required("وارد کردن  توضیحات الزامی است"),
     categories: yup.string().required("وارد کردن  دسته بندی الزامی است"),
     brand: yup.string().required("وارد کردن  برند الزامی است"),
+    item: yup.string().required("وارد کردن  نوع لباس الزامی است"),
     price: yup.string().required("وارد کردن  قیمت الزامی است"),
 });

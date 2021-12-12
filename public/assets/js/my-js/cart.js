@@ -43,7 +43,7 @@ if (addToCartBtn !== null) {
     addToCartBtn.addEventListener("click", e => {
         e.preventDefault();
 
-        
+
 
         // ! get parent 
         var parentElement = document.getElementById("card__item");
@@ -60,7 +60,7 @@ if (addToCartBtn !== null) {
         }
 
 
-        if(!product.color || !product.size || !product.price) {
+        if (!product.color || !product.size || !product.price) {
             return alert("لطفا ابتدا رنگ و سایز مورد نظر را انتخاب کنید")
         }
 
@@ -72,7 +72,7 @@ if (addToCartBtn !== null) {
             length();
             saveToLocalStorage();
             idProduct2.value = randomNumber()
-        }else {
+        } else {
             return alert("این محصول در سبد خرید موجود است");
         }
     })

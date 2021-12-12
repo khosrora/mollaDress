@@ -1,3 +1,4 @@
+var minifig = require('minifig');
 
 // * Model
 const Category = require('../admin/categories/model/Category');
@@ -5,6 +6,9 @@ const Attribute = require('../admin/products/model/Attribute');
 const Product = require('../admin/products/model/Product');
 const Brand = require('../admin/brands/model/Brand');
 const Blog = require('../admin/blogs/model/Blog');
+const Setting = require('../admin/settings/model/Setting');
+const ContactUs = require('../user/model/ContactUs');
+const Comment = require('../user/model/Comment');
 
 // *error handler
 const { get500 } = require('../errorHandler');
@@ -17,11 +21,12 @@ class publicController extends controller {
     // ? desc ==> home page
     // ? path ==> /page
     async home(req, res) {
-        // ! get items 
-        const categories = await Category.find();
-        const products = await Product.find({ isActive: true });
-        const blogs = await Blog.find().limit(8);
         try {
+            // ! get items 
+            const categories = await Category.find();
+            const products = await Product.find({ isActive: true });
+            const contactUs = await ContactUs.find({ isShow: true });
+            const blogs = await Blog.find().limit(8);
             return res.render("public/home.ejs", {
                 title: "صفحه اصلی",
                 breadCrumb: "صفحه اصلی",
@@ -30,6 +35,7 @@ class publicController extends controller {
                 products,
                 separate,
                 blogs,
+                contactUs,
                 jalaliMoment: this.jalaliMoment,
                 truncate: this.truncate,
             })
@@ -214,7 +220,8 @@ class publicController extends controller {
             const categories = await Category.find();
             const blog = await Blog.findOne({ slug: req.params.slug }).populate("user");
             const suggests = await Blog.find({ sort: -1 });
-            console.log(suggests)
+            const comments = await Comment.find({ post: blog._id });
+            const formData = req.flash("formData")[0];
 
             return res.render("public/pages/singleBlog.ejs", {
                 title: `${blog.title}`,
@@ -224,7 +231,11 @@ class publicController extends controller {
                 truncate: this.truncate,
                 jalaliMoment: this.jalaliMoment,
                 blog,
-                suggests
+                suggests,
+                comments,
+                error: req.flash("error"),
+                message: req.flash("success_msg"),
+                formData,
             })
         } catch (err) {
             console.log(err.message);
@@ -264,14 +275,18 @@ class publicController extends controller {
         const categories = await Category.find();
 
         try {
+            // ! get items
+            const setting = await Setting.findOne({ isActive: true })
             return res.render("public/pages/aboutUs.ejs", {
                 title: "درباره ما",
                 breadCrumb: "درباره ما",
                 message: req.flash("success_msg"),
                 categories,
                 jalaliMoment: this.jalaliMoment,
+                setting
             })
         } catch (err) {
+            console.log(err.message)
             get500(req, res)
         }
     }
@@ -279,21 +294,70 @@ class publicController extends controller {
     // ? desc ==> contactUs
     // ? path ==> /contactUs
     async getContactUs(req, res) {
-        // ! get items 
-        const categories = await Category.find();
-
         try {
+            // ! get items 
+            const setting = await Setting.findOne({ isActive: true })
+            const categories = await Category.find();
+            const formData = req.flash("formData")[0];
             return res.render("public/pages/contactUs.ejs", {
                 title: "درباره ما",
                 breadCrumb: "درباره ما",
-                message: req.flash("success_msg"),
                 categories,
                 jalaliMoment: this.jalaliMoment,
+                setting,
+                error: req.flash("error"),
+                message: req.flash("success_msg"),
+                formData
             })
         } catch (err) {
+            console.log(err.message)
             get500(req, res)
         }
     }
 
+    // ? desc ==> send  contactUs form 
+    // ? path ==> /contactUs
+    async ContactUs(req, res) {
+        try {
+            // ! validation
+            await ContactUs.contactUsValidate(req.body)
+            // ! generate profile
+            await minifig.makeSVG(async (svg) => {
+                // ! create contact us
+                await ContactUs.create({
+                    ...req.body, profile: svg
+                });
+            });
+            // ! send message
+            req.flash("success_msg", "پس از مشاهده مدیریت پاسخ به صورت پیامک برای شما ارسال میشود");
+            return res.redirect("/contactUs");
+        } catch (err) {
+            console.log(err.message)
+            req.flash("error", err.message);
+            return this.back(req, res)
+        }
+    }
+
+    // ? desc ==> create comment
+    // ? path ==> auth/comment
+    async comment(req, res) {
+        try {
+            // ! get items
+            const { name, email, text, id } = req.body;
+            // ! validate
+            await Comment.commentValidate(req.body);
+            // ! create comment
+            await Comment.create({
+                name, email, text, post: id
+            })
+            // ! req.flash 
+            req.flash("success_msg", "نظر شما با موفقیت ارسال شد");
+            return this.back(req, res)
+        } catch (err) {
+            console.log(err.message);
+            req.flash("error", err.message)
+            return this.back(req, res)
+        }
+    }
 }
 module.exports = new publicController();

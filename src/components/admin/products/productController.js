@@ -45,7 +45,7 @@ class productController extends controller {
     async getCreateProductPage(req, res) {
         try {
             // ! get items
-            const categories = await Category.find({ category: null });
+            const categories = await Category.find();
             const brands = await Brand.find();
             return res.render("admin/product/createProduct", {
                 title: "ساخت محصول",

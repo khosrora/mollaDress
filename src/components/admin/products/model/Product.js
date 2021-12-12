@@ -14,6 +14,7 @@ const productModel = new Schema({
     view: { type: Number, default: 0 },
     categories: { type: String, required: false },
     brand: { type: String, required: false },
+    item: { type: String, required: false },
     price: { type: String, required: true },
     sell: { type: Number, default: 0 },
 
