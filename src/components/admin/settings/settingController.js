@@ -1,5 +1,9 @@
+const fs = require('fs');
+const appRoot = require('app-root-path');
 // * Model
 const Setting = require('./model/Setting');
+const Banner = require('./model/Banner');
+
 // *error handler
 const { get500 } = require('../../errorHandler');
 
@@ -95,6 +99,64 @@ class settingController extends controller {
         }
     }
 
+    // ? desc ==> delete setting web site
+    // ? path ==> /deleteSetting/:id
+    async getAllBanners(req, res) {
+        try {
+            const banners = await Banner.find();
+            return res.render("admin/settings/banners.ejs", {
+                title: "بنرهای وب سایت",
+                breadCrumb: "بنرهای وب سایت",
+                error: req.flash("error"),
+                message: req.flash("success_msg"),
+                banners
+            })
+        } catch (err) {
+            console.log(err.message)
+            get500(req, res)
+        }
+    }
+
+    // ? desc ==> get page create banners
+    // ? path ==> /createBanner
+    async getCreateBannerPage(req, res) {
+        try {
+            return res.render("admin/settings/createBanner.ejs", {
+                title: "ساخت بنر وب سایت",
+                breadCrumb: "ساخت بنر وب سایت",
+                error: req.flash("error"),
+                message: req.flash("success_msg"),
+            })
+        } catch (err) {
+            console.log(err.message);
+            get500(req, res);
+        }
+    }
+
+    // ? desc ==> create banners
+    // ? path ==> /createBanner
+    async createBanner(req, res) {
+        try {
+            // ! get items
+            const { title } = req.body;
+            // ! validation
+            if (!title, !req.file) {
+                req.flash("error", "لطفا تمام اطلاعات را وارد کنید")
+                return this.back(req, res)
+            }
+            // ! create banner 
+            await Banner.create({
+                title, image: req.file.filename
+            });
+            // ! send message 
+            req.flash("success_msg", "بنر با موفقیت ثبت شد")
+            return res.redirect("/admin/banners");
+        } catch (err) {
+            fs.unlinkSync(`${appRoot}/public/uploads/images/blogs/` + req.file.filename);
+            console.log(err.message);
+            get500(req, res);
+        }
+    }
 
 
 }

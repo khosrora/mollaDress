@@ -27,6 +27,7 @@ class usersController extends controller {
                 message: req.flash("success_msg"),
                 jalaliMoment: this.jalaliMoment,
                 users,
+                blogs
             })
         } catch (err) {
             console.log(err.message);

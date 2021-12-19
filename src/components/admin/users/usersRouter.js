@@ -31,27 +31,27 @@ router.get("/singleUser/:id", handle.isAdmin, gate.can("show-users"), usersContr
 
 // ? desc ==> change is Admin 
 // ? path ==> /changeAdmin/:id
-router.get("/changeAdmin/:id", usersController.changeIsAdmin);
+router.get("/changeAdmin/:id", gate.can("show-users"),usersController.changeIsAdmin);
 
 // ? desc ==> change role User
 // ? path ==> /changeRole/:id
-router.post("/changeRole/:id", usersController.changeRole);
+router.post("/changeRole/:id", gate.can("show-users"),usersController.changeRole);
 
 // ? desc ==> get contact us
 // ? path ==> /contactUs
-router.get("/contactUs", usersController.getContactUsPage);
+router.get("/contactUs", gate.can("show-users"),usersController.getContactUsPage);
 
 // ? desc ==> isShow contact us
 // ? path ==> /isShow/:id
-router.get("/isShow/:id", usersController.isShowContactUs);
+router.get("/isShow/:id", gate.can("show-users"),usersController.isShowContactUs);
 
 // ? desc ==> get all comments
 // ? path ==> /comments
-router.get("/comments", usersController.getAllComments);
+router.get("/comments", gate.can("show-users"),usersController.getAllComments);
 
 // ? desc ==> delete comment
 // ? path ==> /deleteComment/:id
-router.get("/deleteComment/:id", usersController.deleteComment);
+router.get("/deleteComment/:id", gate.can("show-users"),usersController.deleteComment);
 
 
 module.exports = router;

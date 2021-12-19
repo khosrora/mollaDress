@@ -41,6 +41,10 @@ router.get("/cart", publicController.getCardPage);
 // ? path ==> /products
 router.get("/products", publicController.getAllProductsPage);
 
+// ? desc ==> get all products
+// ? path ==> /products
+router.get("/products/brands", publicController.getAllProductsPage);
+
 // ? desc ==> get category products
 // ? path ==> /products/:name
 router.get("/products/:name", publicController.getCategoryProductsPage);
@@ -69,5 +73,14 @@ router.post("/contactUs", publicController.ContactUs);
 // ? path ==> auth/comment
 router.post("/comment", publicController.comment)
 
+// ? desc ==> get page products with brand & cate
+// ? path ==> /products/brand/category
+router.get("/products/:categories/:subCate", publicController.getAllproductsBrands)
+
+// ? desc ==> get page products with filters
+// ? path ==> /productsFilter/:brand
+router.get("/productsBrands/:brand", publicController.getFilterBrand)
+
+router.post('/auto', publicController.getSearch);
 
 module.exports = router;

@@ -9,6 +9,7 @@ const Blog = require('../admin/blogs/model/Blog');
 const Setting = require('../admin/settings/model/Setting');
 const ContactUs = require('../user/model/ContactUs');
 const Comment = require('../user/model/Comment');
+const Banner = require('../admin/settings/model/Banner');
 
 // *error handler
 const { get500 } = require('../errorHandler');
@@ -27,6 +28,9 @@ class publicController extends controller {
             const products = await Product.find({ isActive: true });
             const contactUs = await ContactUs.find({ isShow: true });
             const blogs = await Blog.find().limit(8);
+            const banners = await Banner.find();
+            const brands = await Brand.find();
+
             return res.render("public/home.ejs", {
                 title: "صفحه اصلی",
                 breadCrumb: "صفحه اصلی",
@@ -36,6 +40,8 @@ class publicController extends controller {
                 separate,
                 blogs,
                 contactUs,
+                banners,
+                brands,
                 jalaliMoment: this.jalaliMoment,
                 truncate: this.truncate,
             })
@@ -164,11 +170,15 @@ class publicController extends controller {
     // ? desc ==> get all products
     // ? path ==> /products
     async getAllProductsPage(req, res) {
+        const page = +req.query.page || 1;
+        const postPerPage = 8;
         try {
             // ! get items 
             const categories = await Category.find();
             const brands = await Brand.find();
-            const products = await Product.find();
+            const numberOfPosts = await Product.find().countDocuments();
+            const products = await Product.find().sort({ createdAt: -1 }).skip((page - 1) * postPerPage).limit(postPerPage);
+    
             const suggests = await Product.find({ sort: -1 });
 
             return res.render("public/pages/products.ejs", {
@@ -179,7 +189,13 @@ class publicController extends controller {
                 truncate: this.truncate,
                 products,
                 suggests,
-                brands
+                brands,
+                currentPage: page,
+                nextPage: page + 1,
+                previousPage: page - 1,
+                hasNextPage: postPerPage * page < numberOfPosts,
+                hasPeriviousPage: page > 1,
+                lastPage: Math.ceil(numberOfPosts / postPerPage),
             })
         } catch (err) {
             console.log(err.message);
@@ -246,12 +262,14 @@ class publicController extends controller {
     // ? desc ==> single blog
     // ? path ==> /blog/:id
     async getBlogsPage(req, res) {
+        const page = +req.query.page || 1;
+        const postPerPage = 4;
         try {
             // ! get items 
             const categories = await Category.find();
-            const blogs = await Blog.find().populate("user");
+            const numberOfPosts = await Blog.find().countDocuments();
+            const blogs = await Blog.find().sort({ createdAt: -1 }).skip((page - 1) * postPerPage).limit(postPerPage);
             const suggests = await Blog.find({ sort: -1 });
-            console.log(blogs)
             return res.render("public/pages/blogs.ejs", {
                 title: `اخبار و مقالات`,
                 breadCrumb: `اخبار و مقالات`,
@@ -260,7 +278,13 @@ class publicController extends controller {
                 truncate: this.truncate,
                 jalaliMoment: this.jalaliMoment,
                 blogs,
-                suggests
+                suggests,
+                currentPage: page,
+                nextPage: page + 1,
+                previousPage: page - 1,
+                hasNextPage: postPerPage * page < numberOfPosts,
+                hasPeriviousPage: page > 1,
+                lastPage: Math.ceil(numberOfPosts / postPerPage),
             })
         } catch (err) {
             console.log(err.message);
@@ -353,6 +377,80 @@ class publicController extends controller {
             // ! req.flash 
             req.flash("success_msg", "نظر شما با موفقیت ارسال شد");
             return this.back(req, res)
+        } catch (err) {
+            console.log(err.message);
+            req.flash("error", err.message)
+            return this.back(req, res)
+        }
+    }
+
+    // ? desc ==> create comment
+    // ? path ==> auth/comment
+    async getAllproductsBrands(req, res) {
+        try {
+            // ! get query
+            const c = req.params.categories;
+            const s = req.params.subCate;
+            console.log(req.params)
+            // ! get categories
+            const brands = await Brand.find();
+            const categories = await Category.find();
+            const suggests = await Product.find({ sort: -1 });
+            const products = await Product.find({
+                $and: [
+                    { categories: c },
+                    { brand: s },
+                    { isActive: true }
+                ]
+            }).sort({ createdAt: -1 });
+
+            return res.render("public/pages/products.ejs", {
+                title: "محصولات",
+                breadCrumb: "محصولات",
+                categories,
+                products,
+                truncate: this.truncate,
+                separate,
+                brands,
+                suggests,
+                jalaliMoment: this.jalaliMoment,
+            })
+        } catch (err) {
+            console.log(err.message);
+            req.flash("error", err.message)
+            return this.back(req, res)
+        }
+    }
+
+    async getFilterBrand(req, res) {
+        try {
+            // ! get items 
+            const categories = await Category.find();
+            const brands = await Brand.find();
+            const products = await Product.find({ brand: req.params.brand });
+            const suggests = await Product.find({ sort: -1 });
+
+            return res.render("public/pages/products.ejs", {
+                title: `محصولات`,
+                breadCrumb: `محصولات`,
+                categories,
+                separate,
+                truncate: this.truncate,
+                products,
+                suggests,
+                brands
+            })
+        } catch (err) {
+            console.log(err.message);
+            req.flash("error", err.message)
+            return this.back(req, res)
+        }
+    }
+
+    async getSearch(req, res) {
+        try {
+            const filter = await Product.find({ title: { '$regex': req.body.auto } });
+            if (filter) res.status(200).json({ data: filter })
         } catch (err) {
             console.log(err.message);
             req.flash("error", err.message)

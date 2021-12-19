@@ -1,207 +1,141 @@
-    <!-- Main Container -->
-    <div class="main-container container-fluid">
-        <!-- Page Container -->
-        <div class="page-container">
+<!-- Main Container -->
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container">
 
-            <%- include("./includes/aside.ejs") %>
-            
+        <%- include("./includes/aside.ejs") %>
+
             <!-- Page Content -->
             <div class="page-content">
-                
+
                 <%- include("./includes/breadCrumb.ejs") %>
-                <!-- Page Body -->
-                <div class="page-body">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                    <div class="databox radius-bordered bg-white">
-                                        <div class="databox-right bg-themesecondary">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="50" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span class="white font-90">50%</span></div>
+                    <!-- Page Body -->
+                    <div class="page-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                        <div class="databox radius-bordered bg-white">
+                                            <div class="databox-right no-padding">
+                                                <img src="/admin/img/avatars/John-Smith.jpg"
+                                                    style="width:65px; height:65px;">
                                             </div>
-                                        </div>
-                                        <div class="databox-left">
-                                            <span class="databox-number themesecondary">14</span>
-                                            <div class="databox-text darkgray">تسک جدید</div>
-                                            <div class="databox-stat themesecondary radius-bordered">
-                                                <i class="stat-icon icon-lg fa fa-tasks"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                    <div class="databox radius-bordered bg-white">
-                                        <div class="databox-right bg-themethirdcolor">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="15" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.2)"><span class="white font-90">15%</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-left">
-                                            <span class="databox-number themethirdcolor">1</span>
-                                            <div class="databox-text darkgray">ایمیل جدید</div>
-                                            <div class="databox-stat themethirdcolor radius-bordered">
-                                                <i class="stat-icon  icon-lg fa fa-envelope-o"></i>
+                                            <div class="databox-left padding-top-20">
+                                                <div class="databox-stat palegreen">
+                                                    <i class="stat-icon icon-xlg fa fa-user"></i>
+                                                </div>
+                                                <div class="databox-text darkgray">
+                                                    <%= usersCount %>
+                                                </div>
+                                                <div class="databox-text darkgray">کاربران ثبت نام کرده</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                    <div class="databox radius-bordered bg-white">
-                                        <div class="databox-right bg-themeprimary">
-                                            <div class="databox-piechart">
-                                                <div id="users-pie" data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="76" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="rgba(255,255,255,0.1)"><span class="white font-90">76%</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-left">
-                                            <span class="databox-number themeprimary">98</span>
-                                            <div class="databox-text darkgray">کاربر جدید</div>
-                                            <div class="databox-state bg-themeprimary">
-                                                <i class="fa fa-check"></i>
-                                            </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="orders-container">
+                                    <div class="orders-header">
+                                        <h6>آخرین بلاگ های اضافه شده</h6>
+                                    </div>
+                                    <ul class="orders-list">
+                                        <% for (let i of blogs) {%>
+                                            <li class="order-item">
+                                                <div class="row">
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
+                                                        <div class="item-booker">
+                                                            <%= i.title %>
+                                                        </div>
+                                                        <div class="item-time">
+                                                            <i class="fa fa-user"></i>
+                                                            <span>
+                                                                <%= i.user.fullname %>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
+                                                        <div class="item-price">
+                                                            <span class="price">
+                                                                <%= jalaliMoment(i.createdAt) %>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <%}%>
+                                    </ul>
+                                    <div class="orders-footer">
+                                        <a class="show-all" href="/admin/getAllblogs"><i class="fa fa-angle-down"></i>
+                                            نمایش همه</a>
+                                        <div class="help">
+                                            <a href=""><i class="fa fa-question"></i></a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                    <div class="databox radius-bordered bg-white">
-                                        <div class="databox-right no-padding">
-                                            <img src="/admin/img/avatars/John-Smith.jpg" style="width:65px; height:65px;">
-                                        </div>
-                                        <div class="databox-left padding-top-20">
-                                            <div class="databox-stat palegreen">
-                                                <i class="stat-icon icon-xlg fa fa-phone"></i>
-                                            </div>
-                                            <div class="databox-text darkgray">علی مانوی</div>
-                                            <div class="databox-text darkgray">فروشنده نمونه</div>
+                            </div>
+                            <div class="col-xs-12 col-md-9">
+                                <div class="widget">
+                                    <div class="widget-header bordered-bottom bordered-themesecondary">
+                                        <i class="widget-icon fa fa-tags themesecondary"></i>
+                                        <span class="widget-caption themesecondary">لیست تیکت ها</span>
+                                    </div>
+                                    <!--Widget Header-->
+                                    <div class="widget-body no-padding">
+                                        <div class="tickets-container">
+                                            <ul class="tickets-list">
+                                                <% for (let i of carts) {%>
+                                                    <li class="ticket-item">
+                                                        <div class="row">
+                                                            <div class="ticket-user col-lg-6 col-sm-12">
+                                                                <span class="user-name">
+                                                                    <%= i.title %>
+                                                                </span>
+                                                                <span class="user-at">
+                                                                    <%= i.user.fullname %>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ticket-time  col-lg-4 col-sm-6 col-xs-12">
+                                                                <div class="divider hidden-md hidden-sm hidden-xs">
+                                                                </div>
+                                                                <i class="fa fa-clock-o"></i>
+                                                                <span class="time">
+                                                                    <%= jalaliMoment(i.createdAt) %>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ticket-type  col-lg-2 col-sm-6 col-xs-12">
+                                                                <span class="divider hidden-xs"></span>
+                                                                <% if(i.isSuccess) {%>
+                                                                    <span class="type ">پرداخت شد</span>
+                                                                    <%}else {%>
+                                                                        <span class="type ">پرداخت نشد</span>
+                                                                        <%}%>
+                                                            </div>
+                                                            <% if (i.isSuccess) {%>
+                                                                <div class="ticket-state bg-palegreen">
+                                                                    <i class="fa fa-check"></i>
+                                                                </div>
+                                                                <%} else {%>
+                                                                    <div class="ticket-state bg-danger">
+                                                                        <i class="fa fa-times"></i>
+                                                                    </div>
+                                                                    <%}%>
+                                                        </div>
+                                                    </li>
+                                                    <%}%>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                            <div class="orders-container">
-                                <div class="orders-header">
-                                    <h6>آخرین سفارشات</h6>
-                                </div>
-                                <ul class="orders-list">
-                                    <li class="order-item">
-                                        <div class="row">
-                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
-                                                <div class="item-booker">مانی هاشمی</div>
-                                                <div class="item-time">
-                                                    <i class="fa fa-calendar"></i>
-                                                    <span>10 دقیقه پیش</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
-                                                <div class="item-price">
-                                                    <span class="currency">$</span>
-                                                    <span class="price">400</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a class="item-more" href="">
-                                            <i></i>
-                                        </a>
-                                    </li>
-                                    <li class="order-item top">
-                                        <div class="row">
-                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
-                                                <div class="item-booker">شهرام بدخشان</div>
-                                                <div class="item-time">
-                                                    <i class="fa fa-calendar"></i>
-                                                    <span>2 ساعت پیش</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
-                                                <div class="item-price">
-                                                    <span class="currency">$</span>
-                                                    <span class="price">620</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a class="item-more" href="">
-                                            <i></i>
-                                        </a>
-                                    </li>
-                                    <li class="order-item">
-                                        <div class="row">
-                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
-                                                <div class="item-booker">جان فورد</div>
-                                                <div class="item-time">
-                                                    <i class="fa fa-calendar"></i>
-                                                    <span>امروز 8 جولای</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
-                                                <div class="item-price">
-                                                    <span class="currency">$</span>
-                                                    <span class="price">220</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a class="item-more" href="">
-                                            <i></i>
-                                        </a>
-                                    </li>
-                                    <li class="order-item">
-                                        <div class="row">
-                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
-                                                <div class="item-booker">کیم بسینگر</div>
-                                                <div class="item-time">
-                                                    <i class="fa fa-calendar"></i>
-                                                    <span>دیروز 7 جولای</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
-                                                <div class="item-price">
-                                                    <span class="currency">$</span>
-                                                    <span class="price">400</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a class="item-more" href="">
-                                            <i></i>
-                                        </a>
-                                    </li>
-                                    <li class="order-item">
-                                        <div class="row">
-                                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 item-right">
-                                                <div class="item-booker">مهرام دلپذیر</div>
-                                                <div class="item-time">
-                                                    <i class="fa fa-calendar"></i>
-                                                    <span>5 جولای</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 item-left">
-                                                <div class="item-price">
-                                                    <span class="currency">$</span>
-                                                    <span class="price">340</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <a class="item-more" href="">
-                                            <i></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="orders-footer">
-                                    <a class="show-all" href=""><i class="fa fa-angle-down"></i> نمایش همه</a>
-                                    <div class="help">
-                                        <a href=""><i class="fa fa-question"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /Page Body -->
+                    <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
-        </div>
-        <!-- /Page Container -->
-        <!-- Main Container -->
-
     </div>
+    <!-- /Page Container -->
+    <!-- Main Container -->
+
+</div>

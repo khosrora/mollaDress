@@ -7,6 +7,7 @@ const settingController = require('./settingController');
 
 // * middleware
 const handle = require('../../../middleware/handle');
+const { upload } = require('../../../middleware/multerSingle');
 
 // * helper
 const gate = require('../../../helper/gate');
@@ -35,6 +36,18 @@ router.get("/changeisActive", handle.isAdmin, gate.can("show-setting"), settingC
 // ? desc ==> delete setting web site
 // ? path ==> /deleteSetting/:id
 router.get("/deleteSetting/:id", handle.isAdmin, gate.can("show-setting"), settingController.deleteSetting);
+
+// ? desc ==> get All banners
+// ? path ==> /banners
+router.get("/banners", handle.isAdmin, gate.can("show-setting"), settingController.getAllBanners);
+
+// ? desc ==> get page create banners
+// ? path ==> /createBanner
+router.get("/createBanner", handle.isAdmin, gate.can("show-setting"), settingController.getCreateBannerPage);
+
+// ? desc ==> create banners
+// ? path ==> /createBanner
+router.post("/createBanner", upload.single('image'), handle.isAdmin, gate.can("show-setting"), settingController.createBanner);
 
 
 

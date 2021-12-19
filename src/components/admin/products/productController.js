@@ -26,12 +26,14 @@ class productController extends controller {
         try {
             // ! get items
             const products = await Product.find().populate("user");
+
             return res.render("admin/product/allproduct", {
                 title: " محصولات ",
                 breadCrumb: " محصولات ",
                 message: req.flash("success_msg"),
                 error: req.flash("error"),
                 products,
+                orders,
                 jalaliMoment: this.jalaliMoment,
             })
         } catch (err) {

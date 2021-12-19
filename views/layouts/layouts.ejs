@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="/assets/css/skins/skin-demo-29.css">
     <link rel="stylesheet" href="/assets/css/demos/demo-29.css">
     <link rel="stylesheet" href="/assets/css/iziToast.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 
 
 </head>
@@ -101,7 +102,7 @@
                                 <div class="header-search-wrapper search-wrapper-wide">
                                     <label for="q" class="sr-only">جستجو</label>
                                     <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-                                    <input type="search" class="form-control" name="q" id="q"
+                                    <input type="search" class="form-control" name="q" id="tags"
                                         placeholder="جستجوی محصول ..." required>
                                 </div><!-- End .header-search-wrapper -->
                             </form>
@@ -144,7 +145,7 @@
 
                                     <ul>
                                         <li><a href="/products">محصولات</a></li>
-                                        <li><a href="/products">مقالات و اخبار</a></li>
+                                        <li><a href="/blogs">مقالات و اخبار</a></li>
                                         <li><a href="/aboutUs">درباره ما</a></li>
                                         <li><a href="/contactUs">تماس با ما</a></li>
                                     </ul>
@@ -336,8 +337,8 @@
 
             <form action="#" method="get" class="mobile-search">
                 <label for="mobile-search" class="sr-only">جستجو</label>
-                <input type="search" class="form-control" name="mobile-search" id="mobile-search"
-                    placeholder="جستجو در ..." required>
+                <input type="search" class="form-control" name="mobile-search" id="tags" placeholder="جستجو در ..."
+                    id="tags" required>
                 <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
             </form>
 
@@ -350,13 +351,13 @@
                         <a href="#">صفحات</a>
                         <ul>
                             <li><a href="/products">محصولات</a></li>
-                            <li><a href="/blog">مقالات و اخبار</a></li>
+                            <li><a href="/blogs">مقالات و اخبار</a></li>
                             <li><a href="/contactus">تماس با ما</a></li>
                             <li><a href="/aboutus">درباره ما</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="blog.html" class="sf-with-ul">فهرست دسته بندی ها</a>
+                        <a href="/blogs" class="sf-with-ul">فهرست دسته بندی ها</a>
 
                         <ul>
                             <% for( category of categories ){%>
@@ -396,6 +397,7 @@
     <!-- Plugins JS File -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/js/jquery.hoverIntent.min.js"></script>
     <script src="/assets/js/jquery.waypoints.min.js"></script>
@@ -413,7 +415,30 @@
     <script src="/assets/js/iziToast.min.js"></script>
     <script src="/assets/js/my-js/iranCity.js"></script>
     <script src="/assets/js/my-js/cart.js"></script>
-
+    <script>
+        $(document).ready(function () {
+            $("#tags").autocomplete({
+                source: function (req, res) {
+                    $.ajax({
+                        url: '/auto',
+                        method: 'post',
+                        dataType: 'json',
+                        data: { 'auto': req.term },
+                        success: function (data) {
+                            var x = new Array();
+                            $.each(data.data, (index, values) => {
+                                x.push({ 'value': values.title });
+                            });
+                            res(x)
+                        },
+                        error: function () {
+                            alert('متاسفانه مشکلی از سمت سرور پیش آمده است')
+                        }
+                    });
+                }
+            });
+        });
+    </script>
     <%- script %>
 
 </body>

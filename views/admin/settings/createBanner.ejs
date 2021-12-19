@@ -1,0 +1,61 @@
+<!-- Main Container -->
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container">
+
+        <%- include("../includes/aside.ejs") %>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <%- include("../../messages/error.ejs") %>
+                    <%- include("../includes/breadCrumb.ejs") %>
+                        <div class="page-body">
+                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="widget">
+                                        <div class="widget-header bordered-bottom bordered-blue">
+                                            <span class="widget-caption">
+                                                <%= title %>
+                                            </span>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div>
+                                                <form role="form" action="/admin/createBanner" method="post"
+                                                    enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <label for="title">عنوان</label>
+                                                        <input type="" class="form-control" id="title"
+                                                            placeholder="نام محصول را وارد کنید" name="title">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <span class="input-group-btn">
+                                                                <span class="btn btn-azure btn-file">
+                                                                    عکس را انتخاب کنید <input type="file" multiple
+                                                                        name="image">
+                                                                </span>
+                                                            </span>
+                                                            <input type="text" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-blue">ایجاد بنر جدید
+                                            </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            <!-- /Page Content -->
+    </div>
+    <!-- /Page Container -->
+    <!-- Main Container -->
+
+</div>
+
+<script src="/admin/js/editors/summernote/summernote.js"></script>
+<script>
+    $('#summernote').summernote({ height: 300 });
+</script>
